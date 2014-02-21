@@ -1,0 +1,62 @@
+header {
+	padding-top: 2em;
+	padding-bottom: 3em;
+	@include media($small) {
+		padding-bottom: 2em;
+	}
+
+	background-color: transparentize($purple, 0.7);
+	border-bottom-width: 3px;
+	border-bottom-color: $purple;
+	border-bottom-style: solid;
+	text-align: center;
+
+	@include row;
+
+	color: $purple;
+
+	div.nbn_logo {
+		@include row();
+		@include shift(7);	
+		@include span-columns(2);
+
+		img {
+			@include media($large) {
+				width: 75%;
+			}
+			@include media($medium) {
+				width: 100%;
+			}
+			@include media($small) {
+				width: 100%;
+			}
+		}
+	}
+
+	h1.title {
+		@include shift(2);
+		@include span-columns(12);
+		@include media($small) {
+			font-size: 1.5em;
+		}
+
+	}
+
+	h2.subtitle {
+		@include shift(4);
+		@include span-columns(8);
+		font-weight: normal;
+		margin-top: 0;
+	}
+
+	p.introduction {
+		margin-top: 0em;
+		@include shift(2);
+		@include span-columns(12);
+		@include reset-all();
+		@include media($small) {
+			font-size: 0.9em;
+		}
+	}
+}
+

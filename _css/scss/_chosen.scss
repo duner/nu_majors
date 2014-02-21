@@ -1,0 +1,47 @@
+div.search {
+
+	@include shift(2);
+	@include span-columns(12);
+
+	@include media($small) {
+		@include shift(1);
+		@include span-columns(7);
+		padding-bottom: 1.5em;
+	}
+
+	div.chosen-container {
+		@include fill-parent;
+	}
+
+	p.mobile_explain {
+		text-align: center;
+		font-size: 0.9em;
+	}
+
+	.chosen-container-multi .chosen-choices li.search-choice {
+		position: relative;
+  		margin: 3px 0 3px 5px;
+  		padding: 3px 7px 3px 5px;
+		border-radius: 3px;
+		line-height: 13px;
+		cursor: default;
+
+		a.search-choice-close {
+			font-family: 'fontello';
+			margin-left: 5px;
+			font-size: 1em;
+			&:hover {
+				color: black;
+			}
+
+			&:after {
+				content: "\e805";
+				font-family: fontello;
+				color: white;
+				&:hover {
+					color: black;
+				}
+			}
+		}
+	}
+}

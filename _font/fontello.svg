@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2014 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="cancel" unicode="&#xe800;" d="m724 112q0-22-15-38l-76-76q-16-15-38-15t-38 15l-164 165l-164-165q-16-15-38-15t-38 15l-76 76q-16 16-16 38t16 38l164 164l-164 164q-16 16-16 38t16 38l76 76q16 16 38 16t38-16l164-164l164 164q16 16 38 16t38-16l76-76q15-15 15-38t-15-38l-164-164l164-164q15-15 15-38z" horiz-adv-x="785.7" />
+<glyph glyph-name="cancel-3" unicode="&#xe804;" d="m799 116l-156-157l-234 235l-235-235l-156 157l234 234l-234 234l156 157l235-235l234 235l156-157l-234-234z" horiz-adv-x="817" />
+<glyph glyph-name="cancel-4" unicode="&#xe805;" d="m123 654l181-181l181 181l123-124l-182-178l183-184l-124-121l-181 182l-181-182l-123 122l183 183l-182 178z" horiz-adv-x="609" />
+<glyph glyph-name="cancel-6" unicode="&#xe807;" d="m654 349l346-346l-154-154l-346 346l-346-346l-154 154l346 346l-346 346l154 154l346-346l346 346l154-154z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

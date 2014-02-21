@@ -1,0 +1,10 @@
+div.container {
+	@include outer-container;
+	padding-right: 1em;
+	padding-left: 1em;
+}
+
+body {
+	font-family: 'Proxima-Nova';
+}
+

@@ -1,0 +1,78 @@
+
+section.main_chart {
+  padding-top: 5em;
+  @include media($small) {
+  	padding-top: 1em;
+  }
+  padding-bottom: 5em;
+  background-color: transparentize($purple, 0.95);
+}
+
+div.chart {
+  @include span-columns(16);
+}
+
+p.metainfo {
+  display: none;
+
+  @include shift(4);
+  @include span-columns(8);
+
+  @include media($small) {
+    @include shift(1);
+    @include span-columns(7);
+  }
+  font-size: .7em;
+  text-align: center;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+svg text {
+  font-size: 0.75em;
+}
+
+svg g.chart {
+
+  g.major .line {
+    fill: none;
+  }
+
+  g.major.inactive {
+    .line {
+      opacity: .1;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
+    circle {
+      opacity: 0;
+      &:hover {
+        opacity: .5;
+      }
+    }
+  }
+
+
+  // g.major.active {
+  //   .line {
+  //     opacity: 1;
+  //     stroke-width: 2;
+  //   }
+  //   circle {
+  //     display:inline; 
+  //   }
+  // }
+  
+}
+
+
+
+
+
+
