@@ -1,12 +1,8 @@
-var w, h; 
-
-$(window).load(function() {
-	// http://stackoverflow.com/questions/3680811/jquery-returns-null-for-element-height-why
-	w = $("div.chart").width()
-	h = 450;
-});
 
 $(document).ready(function() {
+
+w = $("div.chart").width()
+h = 450;
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -72,7 +68,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	   	.attr("class", "main_chart")
 	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-	    .attr("class", "chart");
+	    .attr("class", "chart inactive");
 
 	var x = d3.time.scale()
 	    .range([0, width]);
@@ -105,12 +101,12 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		activeItemsExist: false
 	};
 
-
 	drawChart(dataset);
-	d3.select('p.metainfo')
-		.attr("display", "inline");
+
+	$('p.metainfo').css("display", "inline");
 
 	function drawChart(dataset) {
+
 		if (width < 350) {
 			x.domain([new Date(2008, 0, 1), new Date(2013, 0, 1)]);
 		} else {
@@ -216,7 +212,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("width", width)
 
 		updateChart(dataset)
-
 	});
 
 
@@ -235,7 +230,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				if (param.activeItemsExist) {
 					return 'chart active';
 				} else {
-					return 'chart';
+					return 'chart inactive';
 				}
 			})
 			.ease(ease);
