@@ -8,3 +8,47 @@ body {
 	font-family: 'Proxima-Nova';
 }
 
+
+section.content {
+	padding-bottom: 2em;
+	margin-bottom: 1em;
+}
+
+div.major {
+	@include span-columns(16);
+
+	h3 {
+		margin-bottom: 1em;
+	}
+
+	div.text {
+		@include span-columns(10);
+
+		p {
+			&:first-of-type {
+				margin-top: 0em;
+			}
+		}
+	}
+
+	div.graph {
+		background-color: $purple;
+		height: 300px;
+		@include span-columns(6);
+	}
+}
+
+div.centertext {
+	@include shift(2);
+	@include span-columns(12);
+	@include reset-all();
+	@include media($small) {
+		font-size: 0.9em;
+	}
+}
+
+footer {
+	background-color: $purple;
+	width: 100%;
+	height: 100px;
+}

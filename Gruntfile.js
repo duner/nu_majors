@@ -1,19 +1,8 @@
-/* global module:false */
 module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		
-		watch: {
-			css: {
-			    files: ['_css/*.scss'],
-			    tasks: ['sass'],
-			    options: {	
-			        spawn: false,
-			    }
-			}
-		},
-
+	
 		sass: {
 			dist: {
 				options: {
@@ -25,11 +14,21 @@ module.exports = function(grunt) {
 			}
 		},
 
-		});
+		watch: {
+			css: {
+			    files: ['_css/*.scss'],
+			    tasks: ['sass'],
+			    options: {	
+			        spawn: false,
+			    }
+			}
+		}
+
+	});
 
 	// Dependencies
-	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-sass');
 	
 	//Run
 	grunt.registerTask('default', ['sass'])

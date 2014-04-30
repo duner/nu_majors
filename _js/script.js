@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
 w = $("div.chart").width()
-h = 450;
+h = 430;
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||

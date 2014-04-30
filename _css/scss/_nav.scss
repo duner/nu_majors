@@ -1,0 +1,33 @@
+nav {
+	width: 100%;
+	background-color: $purple;
+	ul {
+		margin-top: 0;
+		list-style: none;
+		text-align: center;
+		-webkit-padding-start: 0em;
+
+		li {
+			display: inline;
+			position: relative;
+
+			a {
+				color: white;
+				text-decoration: none;
+				// padding: 1em;
+				&:first-of-type {
+					padding-left: 0em;
+				}
+				&:last-of-type {
+					padding-right: 0em;
+				}
+
+				&:hover {
+					background-color: grey;
+					color: $purple;
+				}
+
+			}
+		}
+	}
+}

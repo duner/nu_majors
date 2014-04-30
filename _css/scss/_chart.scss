@@ -1,14 +1,20 @@
 
 section.main_chart {
-  padding-top: 5em;
+  padding-top: 1em;
   @include media($small) {
   	padding-top: 1em;
   }
-  padding-bottom: 5em;
+  padding-bottom: 2em;
   background-color: transparentize($purple, 0.95);
+
+  border-bottom-width: 1px;
+  border-bottom-color: $purple;
+  border-bottom-style: solid;
+
 }
 
 div.chart {
+  margin-top: 1em;
   @include span-columns(16);
 }
 
@@ -40,6 +46,7 @@ svg g.chart {
 
   g.major .line {
     fill: none;
+    cursor: pointer;
   }
 
   g.major.inactive {

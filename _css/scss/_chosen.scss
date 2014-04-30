@@ -1,5 +1,6 @@
 div.search {
-
+	
+	margin-top: 1em;
 	@include shift(2);
 	@include span-columns(12);
 
