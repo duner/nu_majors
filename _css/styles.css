@@ -407,50 +407,6 @@ div.container {
 body {
   font-family: 'Proxima-Nova'; }
 
-section.content {
-  padding-bottom: 2em;
-  margin-bottom: 1em; }
-
-div.major {
-  display: block;
-  float: left;
-  margin-right: 1.75788%;
-  width: 100%; }
-  div.major:last-child {
-    margin-right: 0; }
-  div.major h3 {
-    margin-bottom: 1em; }
-  div.major div.text {
-    display: block;
-    float: left;
-    margin-right: 1.75788%;
-    width: 61.8408%; }
-    div.major div.text:last-child {
-      margin-right: 0; }
-    div.major div.text p:first-of-type {
-      margin-top: 0em; }
-  div.major div.graph {
-    background-color: #501f84;
-    height: 300px;
-    display: block;
-    float: left;
-    margin-right: 1.75788%;
-    width: 36.40133%; }
-    div.major div.graph:last-child {
-      margin-right: 0; }
-
-div.centertext {
-  margin-left: 12.71973%;
-  display: block;
-  float: left;
-  margin-right: 1.75788%;
-  width: 74.56053%; }
-  div.centertext:last-child {
-    margin-right: 0; }
-  @media screen and (max-width: 25em) {
-    div.centertext {
-      font-size: 0.9em; } }
-
 footer {
   background-color: #501f84;
   width: 100%;
@@ -625,9 +581,6 @@ svg g.chart g.major.inactive circle {
 section.content {
   padding-bottom: 2em;
   margin-bottom: 1em; }
-  section.content nav {
-    width: 100%;
-    background-color: #501f84; }
   section.content div.major {
     display: block;
     float: left;

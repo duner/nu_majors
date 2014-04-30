@@ -1,18 +1,6 @@
 section.content {
 	padding-bottom: 2em;
 	margin-bottom: 1em;
-	
-	nav {
-		width: 100%;
-		background-color: $purple;
-		ul {
-			li {
-				a {
-
-				}
-			}
-		}
-	}
 
 	div.major {
 		@include span-columns(16);
