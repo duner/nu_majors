@@ -1,7 +1,10 @@
-w = 850;
-h = 450;
 
-//d3.select(window).on('resize', resize); 
+$(document).ready(function() {
+
+w = $("div.chart").width()
+h = 430;
+break1 = 550;
+break2 = 350;
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -35,15 +38,17 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	});
 
 	colors = makeColorScheme()
+	purple = d3.rgb('#501F84');
 
 	//Search 
-	$('div.graph').before("<div class='search'></div>");
+	$('div.chart').before("<div class='search'></div>");
 	if (isMobile == false) {
 		$('div.search').append('<select data-placeholder="Search for your major and compare it to others."' +
 								'class="chosen-select" multiple="true"></select></div>');
 		select = $('select.chosen-select');
 		select.chosen({
 			width: '100%',
+			max_selected_options: 10,
 			no_results_text: "Oops, nothing found!",
 		});
 		mkSearch(dataset);
@@ -54,17 +59,17 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 
 	//Set up SVG
-	var margin = {top: 20, right: 80, bottom: 30, left: 50},
+	var margin = {top: 20, right: 15, bottom: 30, left: 30},
 	    width = w - margin.left - margin.right,
 	    height = h - margin.top - margin.bottom;
 
-	var svg = d3.select("div.graph").append("svg")
-	    .attr("width", width + margin.left + margin.right)
-	    .attr("height", height + margin.top + margin.bottom)
-	.append("g")
-	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-	    .attr("class", "chart");
+	var svg = d3.select("div.chart").append("svg")
+	   	.attr("class", "main_chart")
+		
+	var chart = d3.select("svg.main_chart").append("g")
+		.classed({'chart': true})
 
+	//Line Stuff
 	var x = d3.time.scale()
 	    .range([0, width]);
 
@@ -85,23 +90,54 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	    .y(function(d) { return y(d[1]); })
 	    .defined(function(d) { return !isNaN(d[1]); });
 
-	
+	//Bar Stuff
+		var barMargin = {top: 20, right: 0, bottom: 30, left: 0},
+		    barChartWidth = w - barMargin.left - barMargin.right,
+		    barWidth = w - barMargin.right;
+
+		var barHeight = 15;
+		var percent = d3.format('%');
+	function latestValue(d) {
+    	return d.values[d.values.length - 1][1];
+	};
+
 	var major = function(d) {
     	return d.major;
 	};
 
-	drawChart(dataset);
+	var param = {
+		upperDomain: getUpperDomain(dataset),
+		activeItemsExist: false
+	};
+
+	if (width > break2) {
+		chart.attr('data-charttype', 'line')
+		drawChart(dataset);
+	} else {
+		chart.attr('data-charttype', 'bar')
+		drawBarGraph(dataset)
+	}
+
+	$('p.metainfo').css("display", "inline");
 
 	function drawChart(dataset) {
+		
+		svg
+			.attr("width", width + margin.left + margin.right)
+	    	.attr("height", height + margin.top + margin.bottom)
 
-		if (isMobile) {
-			x.domain([new Date(2008, 0, 1), new Date(2013, 0, 1)]);
+		chart
+			.attr('class', 'chart inactive')
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+		if (width < break1) {
+			x.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
 		} else {
 			x.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 		}
 		y.domain([0, getUpperDomain(dataset)]);
 
-		svg.append("clipPath")
+		chart.append("clipPath")
 		    .attr("id", "chart-area")         
 		    .append("rect")
 		    // .attr("x", margin.left)
@@ -110,7 +146,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		    .attr("height", height)
 		    .attr("fill", "grey");
 
-		var majors = svg.selectAll(".major")
+		var majors = chart.selectAll(".major")
 			.data(dataset)
 			.enter()
 			.append("g")
@@ -129,24 +165,31 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				select.trigger('chosen:updated');
 		    	updateDataset(dataset);
 			})
-			// .on('mouseover', function(d) {
-			// 	majors.append("text")
-			// 		.attr("id", "tooltip")
-			// 		.attr("fill", "black")
-			// 		.text(d.major);
-			// })
-			// .on('mouseout', function(d) {
-			// 	majors.select("#tooltip").remove();
-			// });
+			.on('mouseover', function(d) {
+				majors.append("text")
+					.attr("class", "tooltip")
+					//.attr("fill", "black")
+					.text(d.major)
+					.attr("text-anchor", "end")
+					.attr("x", width);
+			})
+			.on('mouseout', function(d) {
+				majors.select(".tooltip").remove();
+			});
 
 		var path = majors.append("path")
 			.attr("class", "line")
 			.attr("d", function(d) { return line(d.values); })
 			.attr("clip-path", "url(#chart-area)")
-			.attr("stroke", function(d) { return '#FFF'; })
+			.attr("stroke", function(d) { return purple })
+			.attr("opacity", .5)
+			.attr("stroke-width", 1.2)
 
 		var point = majors.append("g")
-			.attr("class", "line-points");
+			.attr("class", "line-points")
+			.attr("display", "none")
+			.attr('fill', purple)
+			.attr("opacity", 0);
 
 		var circle = point.selectAll('circle')
 			.data(function(d){return d.values})
@@ -155,14 +198,13 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("cx", function(d) { return x(d[0]) })
 			.attr("cy", function(d) { return y(d[1]) })
 			.attr("r", 2.5)
-			.attr("display", "none")
 
-		svg.append("g")
+		chart.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
 			.call(xAxis);
 
-		svg.append("g")
+		chart.append("g")
 			.attr("class", "y axis")
 			.call(yAxis)
 		.append("text")
@@ -174,10 +216,48 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 	}
 
+	$( window ).resize( function() {
+		wid = $("div.chart").width()
+		width = wid - margin.left - margin.right;
 
-	function updateChart(dataset, param) {
+		var charttype = chart.attr('data-charttype');
+		if (width > break2) {
 
-		console.log(dataset);
+			if (width < break1) {
+				x.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
+			} else {
+				x.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
+			}
+			x.range([0, width]);
+			d3.select(".x.axis").call(xAxis);
+
+			d3.select('svg.main_chart')
+				.attr("width", width + margin.left + margin.right)
+
+			d3.select("#chart-area")
+				.select("rect")
+				.attr("width", width)
+
+			if (charttype == 'bar') {
+				chart.selectAll('*').remove()
+				chart.attr('data-charttype', 'line')
+				drawChart(dataset)
+			} else {
+				updateChart(dataset);
+			}
+		} else {
+			if (charttype == 'line') {
+				chart.selectAll('*').remove()
+				chart.attr('data-charttype', 'bar')
+				drawBarGraph(dataset);
+			} else {
+				updateBarGraph(dataset)	
+			}
+		}
+
+	});
+
+	function updateChart(dataset) {
 
 		function major(d) {
 			return d.major;
@@ -186,13 +266,13 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		var duration = 200;
 		var ease = 'linear';
 
-		var t = svg.transition()
+		var t = chart.transition()
 			.duration(duration)
 			.attr("class", function(d){
 				if (param.activeItemsExist) {
 					return 'chart active';
 				} else {
-					return 'chart';
+					return 'chart inactive';
 				}
 			})
 			.ease(ease);
@@ -200,7 +280,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		y.domain([0,param.upperDomain]);
 		t.select(".y.axis").call(yAxis);
 
-		var majors = svg.selectAll(".major")
+		var majors = chart.selectAll(".major")
 			.data(dataset, major)
 			.order();
 
@@ -218,7 +298,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			})
 
 		var path = majors.selectAll("path")
-			.order();
+			.order()
 
 		path.transition()
 			.duration(duration)
@@ -228,11 +308,60 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				if (d.color) { 
 					return d.color;
 				} else {
-					return '#FFF'
+					return purple;
+				}
+			})
+			.attr("stroke-width", function(d) { 
+				if (d.color) { 
+					return 2.5;
+				} else {
+					return 1.2;
+				}
+			})
+			.attr("opacity", function(d) { 
+				if (param && !param.activeItemsExist) {
+					return .5;
+				} else if (d.active) { 
+					return 1;
+				} else {
+					return 0.1;
 				}
 			});
 
 		var point = majors.selectAll('.line-points');
+		point.transition()
+			.duration(duration)
+			.ease(ease)
+			.attr("display", function(d) {
+				if (d.active) { 
+					return 'inline';
+				} else {
+					return 'none';
+				}
+
+			})
+			.attr("fill", function(d) { 
+				if (d.color) { 
+					return d.color;
+				} else {
+					return purple;
+				}
+			})
+			.attr("opacity", function(d) { 
+				if (d.active) { 
+					return 1;
+				} else {
+					return 0;
+				}
+			})
+			.attr("r", function(d) {
+				if (d.active) {
+					return 5;
+				} else {
+					return 2.5;
+				}
+			});
+
 		var circle = point.selectAll('circle')
 			.data(function(d){return d.values})
 
@@ -241,9 +370,104 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
     		.ease(ease)
 			.attr("cx", function(d) { return x(d[0]) })
 			.attr("cy", function(d) { return y(d[1]) })
+
+
+		$('.search-choice').each(function(item) {
+			text = $(this).text();
+			for (var i = dataset.length - 1; i >= 0; i--) {
+				color = d3.rgb(dataset[i].color);
+				if (dataset[i].major == text) {
+					$( this ).css({
+						"background-color": color,
+						"color": color.brighter(4)
+					});
+				}
+			};
+		});
 	}
 
-	function SelectedMajors() { this.items = []; }
+
+
+	function drawBarGraph(dataset) {
+
+		svg
+			.attr("width", barChartWidth + 15)
+	    	.attr("height", (barHeight * numCases(dataset)) + barMargin.top + barMargin.bottom)
+
+		chart
+			.data(dataset)
+			.attr('width', barWidth)
+			.attr('height', '')
+			.attr('class', 'chart')
+			.attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
+		
+		var b = d3.scale.linear()
+		    .range([0, width]);
+	  	
+	  	b.domain([0, getUpperDomainForLatestYear(dataset)]);
+		
+		var barAxis = d3.svg.axis()
+    		.scale(bar)
+
+		chart.data(dataset)
+			.attr('width', width)
+			.attr('height', '');
+
+		var majors = chart.selectAll(".major")
+			.data(dataset)
+			.enter()
+			.append("g")
+			.attr("class", "major")
+			.filter(function(d) { return (latestValue(d) != 0) })
+			.sort(function(a, b) {
+				return d3.descending(latestValue(a), latestValue(b));
+			})
+			.attr("data-major", function(d) {return d.major;})
+			.attr("data-school", function(d) {return d.school;})
+			.attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+		var bar = majors.append('rect')
+			.attr('width', function(d) { return b(d.values[d.values.length - 1][1]); })
+			.attr('height', barHeight)
+			.attr('fill', 'black');
+
+	}
+
+	function updateBarGraph(dataset) {
+
+		function major(d) {
+			return d.major;
+		}
+
+		var duration = 400;
+		var ease = 'linear';
+
+		var bar = d3.scale.linear()
+		    .range([0, width]);
+	  	
+	  	bar.domain([0, getUpperDomainForLatestYear(dataset)]);
+
+		var t = chart.transition()
+			.duration(duration)
+			.ease(ease);
+
+		var majors = chart.selectAll(".major")
+			.data(dataset)
+
+		majors.transition()
+			.duration(duration)
+			.ease(ease);
+		
+		var bar = majors.selectAll('rect');
+		bar.transition()
+			.ease(ease)
+			.attr('width', function(d) { return d.values[d.values.length - 1][1]; });
+
+	}
+
+	function SelectedMajors() { 
+		this.items = []; 
+	}
 	SelectedMajors.prototype.update = function(item) {
 		if (item.selected){
 			this.items.push(item.selected);
@@ -287,10 +511,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		
 	};
 
-
 	function updateDataset(d) {
 		activeItems = [];
-		param = {};
 		for (var i = d.length - 1; i >= 0; i--) {
 			major = d[i].major;
 			itemInFilter = selectedMajors.items.indexOf(major);
@@ -325,14 +547,15 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			}
 		});
 
+		selectedMajors.paramaters = param;
 		dataset = updateColors(d)
-		updateChart(dataset, param);
+		updateChart(dataset);
 	}
 
 	function makeColorScheme() {
 
 		var colors = [];
-		var colorArray = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf"];
+		var colorArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
 
 		for (var i = 0; i < colorArray.length; i++) {
 			var obj = {
@@ -394,6 +617,16 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		return max + (max/15);
 	}
 
+	function getUpperDomainForLatestYear(dataset) {
+		yValues = [];
+		for (var i = dataset.length - 1; i >= 0; i--) {
+			var l = dataset[i].values.length;
+			yValues.push(dataset[i].values[l-1][1]);
+		};
+		max = d3.max(yValues);
+		return max;
+	}
+
 	function schoolCodeToName(school) {
 		switch(school) {
 			case "02SES": return "School of Education and Social Policy"; break;
@@ -405,12 +638,19 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		}
 	}
 
+	function numCases(dataset) {
+		hello = [];
+		for (var i = dataset.length - 1; i >= 0; i--) {
+			v = latestValue(dataset[i])
+			if (v != 0) {
+				y.push(dataset[i])
+			}
+		}
+		console.log(y.len)
+		return y.length
+	}
+
+
 });
 
-//https://groups.google.com/forum/#!msg/d3-js/eUEJWSSWDRY/EMmufH2KP8MJ
-d3.selection.prototype.moveToFront = function() { 
-	return this.each(function() { 
-  		this.parentNode.appendChild(this); 
-	}); 
-}; 
-
+});
