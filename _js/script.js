@@ -3,6 +3,8 @@ $(document).ready(function() {
 
 w = $("div.chart").width()
 h = 430;
+break1 = 550;
+break2 = 350;
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -93,7 +95,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	
 	var major = function(d) {
     	return d.major;
-
 	};
 
 	var param = {
@@ -101,14 +102,18 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		activeItemsExist: false
 	};
 
-	drawChart(dataset);
+	if (width > break2) {
+		drawChart(dataset);
+	} else {
+		drawBarGraph(dataset)
+	}
 
 	$('p.metainfo').css("display", "inline");
 
 	function drawChart(dataset) {
 
-		if (width < 350) {
-			x.domain([new Date(2008, 0, 1), new Date(2013, 0, 1)]);
+		if (width < break1) {
+			x.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
 		} else {
 			x.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 		}
@@ -196,8 +201,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	$( window ).resize( function() {
 		wid = $("div.chart").width()
 		width = wid - margin.left - margin.right;
-		if (width < 350) {
-			x.domain([new Date(2008, 0, 1), new Date(2013, 0, 1)]);
+		if (width < break1) {
+			x.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
 		} else {
 			x.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 		}
@@ -211,9 +216,13 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.select("rect")
 			.attr("width", width)
 
-		updateChart(dataset)
-	});
+	if (width > break2) {
+		updateChart(dataset);
+	} else {
+		drawBarGraph(dataset)
+	}
 
+});
 
 	function updateChart(dataset) {
 
@@ -342,6 +351,10 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				}
 			};
 		});
+	}
+
+	function drawBarGraph(dataset) {
+
 	}
 
 	function SelectedMajors() { 

@@ -494,6 +494,8 @@ div.search {
         margin-right: 0; } }
   div.search div.chosen-container {
     width: 100%; }
+    div.search div.chosen-container ul.chosen-choices {
+      padding: 0.2em; }
   div.search p.mobile_explain {
     text-align: center;
     font-size: 0.9em; }
@@ -608,17 +610,18 @@ section.content {
       width: 36.40133%; }
       section.content div.major div.graph:last-child {
         margin-right: 0; }
-  section.content div.centertext {
-    margin-left: 12.71973%;
-    display: block;
-    float: left;
-    margin-right: 1.75788%;
-    width: 74.56053%; }
-    section.content div.centertext:last-child {
-      margin-right: 0; }
-    @media screen and (max-width: 25em) {
-      section.content div.centertext {
-        font-size: 0.9em; } }
+
+div.centertext {
+  margin-left: 12.71973%;
+  display: block;
+  float: left;
+  margin-right: 1.75788%;
+  width: 74.56053%; }
+  div.centertext:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 25em) {
+    div.centertext {
+      font-size: 0.9em; } }
 
 nav {
   width: 100%;

@@ -12,6 +12,10 @@ div.search {
 
 	div.chosen-container {
 		@include fill-parent;
+
+		ul.chosen-choices {
+			padding: 0.2em;
+		}
 	}
 
 	p.mobile_explain {

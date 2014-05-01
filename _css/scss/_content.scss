@@ -26,13 +26,13 @@ section.content {
 		}
 	}
 
-	div.centertext {
-		@include shift(2);
-		@include span-columns(12);
-		@include reset-all();
-		@include media($small) {
-			font-size: 0.9em;
-		}
-	}
+}
 
+div.centertext {
+	@include shift(2);
+	@include span-columns(12);
+	@include reset-all();
+	@include media($small) {
+		font-size: 0.9em;
+	}
 }
