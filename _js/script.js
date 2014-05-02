@@ -3,8 +3,8 @@ $(document).ready(function() {
 
 w = $("div.chart").width()
 h = 430;
-break1 = 550;
-break2 = 350;
+break1 = 700;
+break2 = 600;
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -90,15 +90,20 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	    .defined(function(d) { return !isNaN(d[1]); });
 
 	//Bar Stuff
-	var barMargin = {top: 20, right: 15, bottom: 30, left: 15},
+	var barMargin = {top: 30, right: 15, bottom: 30, left: 15},
 	    barChartWidth = w - barMargin.left - barMargin.right,
 	    barWidth = w - barMargin.right;
 
+	var barPaddingTop = 1;
 	var barHeight = 20;
 	var percent = d3.format('%');
 
 	var b = d3.scale.linear()
 	    .range([0, barChartWidth]);
+
+	var barAxis = d3.svg.axis()
+		.scale(b)
+		.orient('top');
 
 	function latestValue(d) {
     	return d.values[d.values.length - 1][1];
@@ -112,9 +117,14 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	if (width > break2) {
 		chart.attr('data-charttype', 'line')
 		drawChart(dataset);
+		$('p.instructions.line').show();
+		$('p.instructions.bar').hide();
 	} else {
+		$('div.search').hide();
 		chart.attr('data-charttype', 'bar')
 		drawBarGraph(dataset)
+		$('p.instructions.line').hide();
+		$('p.instructions.bar').show();
 	}
 
 	$('p.metainfo').css("display", "inline");
@@ -346,19 +356,21 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		
 		svg
 			.attr("width", barChartWidth + 15)
-	    	.attr("height", (barHeight * numCases(dataset)) + barMargin.top + barMargin.bottom)
+	    	.attr("height", ((barHeight + barPaddingTop) * numCases(dataset)) + barMargin.top + barMargin.bottom)
 
 		chart
 			.data(dataset)
 			.attr('width', barWidth)
-			.attr('height', '')
+			.attr('height', ((barHeight + barPaddingTop) * numCases(dataset)))
 			.attr('class', 'chart')
 			.attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
 		
 		b.domain([0, getUpperDomainForLatestYear(dataset)]);
 		
-		var barAxis = d3.svg.axis()
-    		.scale(bar)
+		chart.append("g")
+			.attr("class", "b axis")
+			// .attr("transform", "translate(0," + height + ")")
+			.call(barAxis);
 
 		chart.data(dataset)
 			.attr('width', width)
@@ -375,8 +387,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("class", "major")
 			.attr("data-major", function(d) {return d.major;})
 			.attr("data-school", function(d) {return d.school;})
-			.attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-		
+			.attr("transform", function(d, i) { return "translate(0," + i * (barHeight+barPaddingTop) + ")"; });
+
 		var bground = majors.append('rect')
 			.attr('class', 'bground')
 			.attr('width', barWidth)
@@ -387,35 +399,60 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr('class', 'bar')
 			.attr('width', function(d) { return b(latestValue(d)); })
 			.attr('height', barHeight)
-			.attr('fill', 'black');
+			.attr('fill', 'purple')
+			.attr('opacity', 0.5);
+
+		var text = majors.append('text')
+			.attr('class', 'name')
+		      .attr("x", function(d) { return 3; })
+		      .attr("y", barHeight / 2)
+		      .attr("dy", ".35em")
+		      .attr("fill", purple)
+		      .text(function(d) { return d.major; });
+
+		majors
+			.on('mouseover', function(d) {
+				var m = d3.select('g[data-major="' + d.major + '"] rect.bar');
+				var n = d3.select('g[data-major="' + d.major + '"] rect.bground');
+				m.attr('opacity', 0.6);
+				n.attr('opacity', 0.4);
+			})
+			.on('mouseout', function(d) {
+				var m = d3.select('g[data-major="' + d.major + '"] rect.bar');
+				var n = d3.select('g[data-major="' + d.major + '"] rect.bground');
+				m.attr('opacity', 0.5);
+				n.attr('opacity', 1);
+			});
+
 	}
 
 	function updateBarGraph(dataset) {
-
-		var duration = 0;
 
 		function major(d) {
 			return d.major;
 		}
 
-		var duration = 400;
+		var duration = 0;
 		var ease = 'linear';
-	  	
-	  	b.range([0, barChartWidth]);
-	  	b.domain([0, getUpperDomainForLatestYear(dataset)]);
 
 		var t = chart.transition()
 			.duration(duration)
 			.ease(ease);
 
+	  	b.range([0, barChartWidth]);
+
+		t.select(".b.axis").call(barAxis);
+
 		var majors = chart.selectAll(".major")
-			.data(dataset)
+			.data(dataset);
 
 		majors.transition()
 			.duration(duration)
 			.ease(ease);
 
 		var bground = majors.selectAll('.bground')
+			.attr('class', 'bground');
+
 		bground.transition()
 			.duration(duration)
 			.ease(ease)
@@ -424,16 +461,22 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		var bar = majors.selectAll('.bar');
 		bar.transition()
 			.ease(ease)
-			.attr('width', function(d) { return b(d.values[d.values.length - 1][1]); });
+			.attr('class', 'bar')
+			.attr('width', function(d) { return b(latestValue(d)); });
 	}
 
 	$( window ).resize( function() {
 		wid = $("div.chart").width()
 		width = wid - margin.left - margin.right;
 		barChartWidth = wid - barMargin.left - barMargin.right;
+	    barWidth = wid - barMargin.right;
 
 		var charttype = chart.attr('data-charttype');
-		if (width > break2) {
+		if (width > break2 && !isMobile) {
+
+			$('div.search').show();
+			$('p.instructions.line').show();
+			$('p.instructions.bar').hide();
 
 			if (width < break1) {
 				x.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
@@ -457,11 +500,16 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			} else {
 				updateChart(dataset);
 			}
+
 		} else {
+
+			$('div.search').hide();
+			$('p.instructions.line').hide();
+			$('p.instructions.bar').show();
 
 			svg
 				.attr("width", barChartWidth + 15)
-		    	.attr("height", (barHeight * numCases(dataset)) + barMargin.top + barMargin.bottom)
+		    	.attr("height", ((barHeight + barPaddingTop) * numCases(dataset)) + barMargin.top + barMargin.bottom)
 
 			if (charttype == 'line') {
 				chart.selectAll('*').remove();

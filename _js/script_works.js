@@ -639,7 +639,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	}
 
 	function numCases(dataset) {
-		hello = [];
+		cases = [];
 		for (var i = dataset.length - 1; i >= 0; i--) {
 			v = latestValue(dataset[i])
 			if (v != 0) {
