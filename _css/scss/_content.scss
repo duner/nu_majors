@@ -29,10 +29,21 @@ section.content {
 }
 
 div.centertext {
-	@include shift(2);
-	@include span-columns(12);
 	@include reset-all();
+	
+	@include media($large) {
+		@include shift(2);
+		@include span-columns(12);
+	}
+
+	@include media($medium) {
+		@include shift(1);
+		@include span-columns(10);
+	}
+
 	@include media($small) {
-		font-size: 0.9em;
+		//font-size: 0.9em;
+		@include shift(0);
+		@include span-columns(8);
 	}
 }
