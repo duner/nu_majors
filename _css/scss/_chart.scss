@@ -2,7 +2,7 @@
 section.main_chart {
   padding-top: 1em;
   @include media($small) {
-  	padding-top: 1em;
+	padding-top: 1em;
   }
   padding-bottom: 2em;
   background-color: transparentize($purple, 0.95);
@@ -13,71 +13,109 @@ section.main_chart {
 
 }
 
-div.chart {
+div.main_chart {
   margin-top: 1em;
   @include span-columns(16);
+
+
+	.axis path, .axis line {
+	  fill: none;
+	  stroke: black;
+	  shape-rendering: crispEdges;
+	}
+
+	svg text {
+	  font-size: 0.75em;
+	}
+
+	svg g.chart {
+
+	  g.major .line {
+		fill: none;
+		cursor: pointer;
+	  }
+
+	  g.major.inactive {
+		.line {
+		  opacity: .1;
+
+		  &:hover {
+			opacity: .7;
+		  }
+		}
+		circle {
+		  opacity: 0;
+		  &:hover {
+			opacity: .5;
+		  }
+		}
+	  }
+
+
+	  // g.major.active {
+	  //   .line {
+	  //     opacity: 1;
+	  //     stroke-width: 2;
+	  //   }
+	  //   circle {
+	  //     display:inline; 
+	  //   }
+	  // }
+	  
+	}
+
+	g.chart[data-charttype="bar"] {
+
+		g.major:hover {
+			
+			rect.bground {
+				opacity: 0.3;
+			}
+
+			rect.bar {
+				opacity: 0.6;
+			}
+		
+		}
+
+	}
+
+}
+div.graph {
+	svg text {
+	  font-size: 0.75em;
+	}
 }
 
 p.metainfo {
   display: none;
 
-  @include shift(4);
-  @include span-columns(8);
+	@include media($large) {
+		@include shift(4);
+		@include span-columns(8);
+	}
 
-  @include media($small) {
-    @include shift(1);
-    @include span-columns(7);
-  }
-  font-size: .7em;
-  text-align: center;
+	@include media($medium) {
+		@include shift(2);
+		@include span-columns(9);	
+	}
+
+	@include media($small) {
+		@include shift(1);
+		@include span-columns(7);
+	}
+
+	font-size: .7em;
+	text-align: center;
+
+	a {
+		color: $purple;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
-
-.axis path, .axis line {
-  fill: none;
-  stroke: black;
-  shape-rendering: crispEdges;
-}
-
-svg text {
-  font-size: 0.75em;
-}
-
-svg g.chart {
-
-  g.major .line {
-    fill: none;
-    cursor: pointer;
-  }
-
-  g.major.inactive {
-    .line {
-      opacity: .1;
-
-      &:hover {
-        opacity: .7;
-      }
-    }
-    circle {
-      opacity: 0;
-      &:hover {
-        opacity: .5;
-      }
-    }
-  }
-
-
-  // g.major.active {
-  //   .line {
-  //     opacity: 1;
-  //     stroke-width: 2;
-  //   }
-  //   circle {
-  //     display:inline; 
-  //   }
-  // }
-  
-}
-
 
 
 

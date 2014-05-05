@@ -1,31 +1,73 @@
 section.content {
 	padding-bottom: 2em;
 	margin-bottom: 1em;
+	@include reset-all();
+	@include reset-layout-direction();
 
 	div.major {
-		@include span-columns(16);
-
-		h3 {
-			margin-bottom: 1em;
+		@include media($large) {
+			@include reset-all();
+			@include shift(0);
+			@include span-columns(16);
 		}
-
-		div.text {
+		@include media($medium) {
+			@include shift(1);
 			@include span-columns(10);
+		}
+		@include media($small) {
+			@include shift(0);
+			@include span-columns(8)
+		}
+		
+		@include reset-layout-direction();
+		
+		div.article {
+			@include reset-layout-direction();
+			@include row($direction: LTR);
+			@include media($medium) {
+				@include row($direction: RTL);	
+			}	
 
-			p {
-				&:first-of-type {
-					margin-top: 0em;
+			h3 {
+				margin-bottom: 1em;
+			}
+			
+			div.text {
+				p {
+					&:first-of-type {
+						margin-top: 0em;
+					}
+				}
+				@include media($large) {
+					@include span-columns(10);		
+				}
+				@include media($medium) {
+					@include fill-parent;		
+				}
+				@include media($small) {
+					@include fill-parent;		
+				}
+			}
+
+			div.small_chart {
+				//background-color: $purple;
+				@include media($large) {
+					@include span-columns(6);	
+					height: 300px;	
+				}
+				@include media($medium) {
+					@include fill-parent;	
+					height: 250px;	
+					margin-bottom: 1em;	
+				}
+				@include media($small) {
+					@include fill-parent;	
+					height: 200px;	
+					margin-bottom: 1em;	
 				}
 			}
 		}
-
-		div.graph {
-			background-color: $purple;
-			height: 300px;
-			@include span-columns(6);
-		}
 	}
-
 }
 
 div.centertext {

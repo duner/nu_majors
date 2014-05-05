@@ -527,88 +527,158 @@ section.main_chart {
     section.main_chart {
       padding-top: 1em; } }
 
-div.chart {
+div.main_chart {
   margin-top: 1em;
   display: block;
   float: left;
   margin-right: 1.75788%;
   width: 100%; }
-  div.chart:last-child {
+  div.main_chart:last-child {
     margin-right: 0; }
+  div.main_chart .axis path, div.main_chart .axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges; }
+  div.main_chart svg text {
+    font-size: 0.75em; }
+  div.main_chart svg g.chart g.major .line {
+    fill: none;
+    cursor: pointer; }
+  div.main_chart svg g.chart g.major.inactive .line {
+    opacity: .1; }
+    div.main_chart svg g.chart g.major.inactive .line:hover {
+      opacity: .7; }
+  div.main_chart svg g.chart g.major.inactive circle {
+    opacity: 0; }
+    div.main_chart svg g.chart g.major.inactive circle:hover {
+      opacity: .5; }
+  div.main_chart g.chart[data-charttype="bar"] g.major:hover rect.bground {
+    opacity: 0.3; }
+  div.main_chart g.chart[data-charttype="bar"] g.major:hover rect.bar {
+    opacity: 0.6; }
+
+div.graph svg text {
+  font-size: 0.75em; }
 
 p.metainfo {
   display: none;
-  margin-left: 25.43947%;
-  display: block;
-  float: left;
-  margin-right: 1.75788%;
-  width: 49.12106%;
   font-size: .7em;
   text-align: center; }
-  p.metainfo:last-child {
-    margin-right: 0; }
+  @media screen and (min-width: 46.9375em) {
+    p.metainfo {
+      margin-left: 25.43947%;
+      display: block;
+      float: left;
+      margin-right: 1.75788%;
+      width: 49.12106%; }
+      p.metainfo:last-child {
+        margin-right: 0; } }
+  @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+    p.metainfo {
+      margin-left: 12.71973%;
+      display: block;
+      float: left;
+      margin-right: 2.35765%;
+      width: 74.41059%; }
+      p.metainfo:last-child {
+        margin-right: 0; } }
   @media screen and (max-width: 25em) {
     p.metainfo {
-      margin-left: 6.35987%;
+      margin-left: 8.5298%;
       display: block;
       float: left;
       margin-right: 3.57866%;
       width: 87.05267%; }
       p.metainfo:last-child {
         margin-right: 0; } }
-
-.axis path, .axis line {
-  fill: none;
-  stroke: black;
-  shape-rendering: crispEdges; }
-
-svg text {
-  font-size: 0.75em; }
-
-svg g.chart g.major .line {
-  fill: none;
-  cursor: pointer; }
-svg g.chart g.major.inactive .line {
-  opacity: .1; }
-  svg g.chart g.major.inactive .line:hover {
-    opacity: .7; }
-svg g.chart g.major.inactive circle {
-  opacity: 0; }
-  svg g.chart g.major.inactive circle:hover {
-    opacity: .5; }
+  p.metainfo a {
+    color: #501f84;
+    text-decoration: none; }
+    p.metainfo a:hover {
+      text-decoration: underline; }
 
 section.content {
   padding-bottom: 2em;
   margin-bottom: 1em; }
-  section.content div.major {
-    display: block;
-    float: left;
-    margin-right: 1.75788%;
-    width: 100%; }
-    section.content div.major:last-child {
-      margin-right: 0; }
-    section.content div.major h3 {
+  @media screen and (min-width: 46.9375em) {
+    section.content div.major {
+      margin-left: 0%;
+      display: block;
+      float: left;
+      margin-right: 1.75788%;
+      width: 100%; }
+      section.content div.major:last-child {
+        margin-right: 0; } }
+  @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+    section.content div.major {
+      margin-left: 6.35987%;
+      display: block;
+      float: left;
+      margin-right: 2.35765%;
+      width: 82.94039%; }
+      section.content div.major:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 25em) {
+    section.content div.major {
+      margin-left: 0%;
+      display: block;
+      float: left;
+      margin-right: 3.57866%;
+      width: 100%; }
+      section.content div.major:last-child {
+        margin-right: 0; } }
+  section.content div.major div.article {
+    display: block; }
+    section.content div.major div.article:after {
+      content: "";
+      display: table;
+      clear: both; }
+    @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+      section.content div.major div.article {
+        display: block; }
+        section.content div.major div.article:after {
+          content: "";
+          display: table;
+          clear: both; } }
+    section.content div.major div.article h3 {
       margin-bottom: 1em; }
-    section.content div.major div.text {
-      display: block;
-      float: left;
-      margin-right: 1.75788%;
-      width: 61.8408%; }
-      section.content div.major div.text:last-child {
-        margin-right: 0; }
-      section.content div.major div.text p:first-of-type {
-        margin-top: 0em; }
-    section.content div.major div.graph {
-      background-color: #501f84;
-      height: 300px;
-      display: block;
-      float: left;
-      margin-right: 1.75788%;
-      width: 36.40133%; }
-      section.content div.major div.graph:last-child {
-        margin-right: 0; }
+    section.content div.major div.article div.text p:first-of-type {
+      margin-top: 0em; }
+    @media screen and (min-width: 46.9375em) {
+      section.content div.major div.article div.text {
+        display: block;
+        float: right;
+        margin-left: 1.75788%;
+        width: 61.8408%; }
+        section.content div.major div.article div.text:last-child {
+          margin-left: 0; } }
+    @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+      section.content div.major div.article div.text {
+        width: 100%; } }
+    @media screen and (max-width: 25em) {
+      section.content div.major div.article div.text {
+        width: 100%; } }
+    @media screen and (min-width: 46.9375em) {
+      section.content div.major div.article div.small_chart {
+        display: block;
+        float: right;
+        margin-left: 1.75788%;
+        width: 36.40133%;
+        height: 300px; }
+        section.content div.major div.article div.small_chart:last-child {
+          margin-left: 0; } }
+    @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+      section.content div.major div.article div.small_chart {
+        width: 100%;
+        height: 250px;
+        margin-bottom: 1em; } }
+    @media screen and (max-width: 25em) {
+      section.content div.major div.article div.small_chart {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 1em; } }
 
-@media screen and (min-width: 37.5625em) {
+@media screen and (min-width: 46.9375em) {
   div.centertext {
     margin-left: 12.71973%;
     display: block;
@@ -617,7 +687,7 @@ section.content {
     width: 74.56053%; }
     div.centertext:last-child {
       margin-right: 0; } }
-@media screen and (min-width: 25.0625em) and (max-width: 37.5em) {
+@media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
   div.centertext {
     margin-left: 6.35987%;
     display: block;

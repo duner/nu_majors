@@ -1,10 +1,14 @@
 
 $(document).ready(function() {
 
-w = $("div.chart").width()
+w = $("div.main_chart").width()
 h = 440;
 break1 = 575;
 break2 = 400;
+
+smallW = $("div.major div.article div.small_chart").width()
+smallH = $("div.major div.article div.small_chart").height()
+
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -41,7 +45,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	purple = d3.rgb('#501F84');
 
 	//Search 
-	$('div.chart').before("<div class='search'></div>");
+	$('div.main_chart').before("<div class='search'></div>");
 	if (isMobile == false) {
 		$('div.search').append('<select data-placeholder="Search for your major and compare it to others."' +
 								'class="chosen-select" multiple="true"></select></div>');
@@ -62,10 +66,10 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	    width = w - margin.left - margin.right,
 	    height = h - margin.top - margin.bottom;
 
-	var svg = d3.select("div.chart").append("svg")
+	var svg = d3.select("div.main_chart").append("svg")
 	   	.attr("class", "main_chart")
 		
-	var chart = d3.select("svg.main_chart").append("g")
+	var main_chart = d3.select("svg.main_chart").append("g")
 		.classed({'chart': true})
 
 	//Line Stuff
@@ -92,7 +96,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	//Bar Stuff
 	var barMargin = {top: 30, right: 5, bottom: 10, left: 5},
 	    barChartWidth = w - barMargin.left - barMargin.right,
-	    barWidth = w - barMargin.right;
+	    barWidth = w - barMargin.right - barMargin.right;
 
 	var barPaddingTop = 1;
 	var barHeight = 20;
@@ -109,23 +113,45 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
     	return d.values[d.values.length - 1][1];
 	};
 
+	//Small Charts
+	var smallMargin = {top: 5, right: 15, bottom: 5, left: 15},
+    smallWidth = smallW - smallMargin.left - smallMargin.right,
+    smallHeight = smallH - smallMargin.top - smallMargin.bottom;
+	var smX = d3.time.scale()
+	    .range([0, smallWidth]);
+	var smY = d3.scale.linear()
+		.rangeRound([smallHeight, 0]);
+	var smXAxis = d3.svg.axis()
+	    .scale(smX)
+	    .orient("bottom");
+	var smYAxis = d3.svg.axis()
+	    .scale(smY)
+	    .orient("left");
+	var smLine = d3.svg.line()
+		.interpolate('monotone')
+	    .x(function(d) { return smX(d[0]); })
+	    .y(function(d) { return smY(d[1]); })
+	    .defined(function(d) { return !isNaN(d[1]); });
+
+	//
 	var param = {
 		upperDomain: getUpperDomain(dataset),
 		activeItemsExist: false
 	};
 
 	if (width > break2) {
-		chart.attr('data-charttype', 'line')
+		main_chart.attr('data-charttype', 'line')
 		drawChart(dataset);
 		$('p.instructions.line').show();
 		$('p.instructions.bar').hide();
 	} else {
 		$('div.search').hide();
-		chart.attr('data-charttype', 'bar')
+		main_chart.attr('data-charttype', 'bar')
 		drawBarGraph(dataset)
 		$('p.instructions.line').hide();
 		$('p.instructions.bar').show();
 	}
+	createSmallGraphs(dataset);
 
 	$('p.metainfo').css("display", "inline");
 
@@ -135,7 +161,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("width", width + margin.left + margin.right)
 	    	.attr("height", height + margin.top + margin.bottom)
 
-		chart
+		main_chart
 			.attr('class', 'chart inactive')
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
@@ -147,14 +173,14 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 		y.domain([0, getUpperDomain(dataset)]);
 
-		chart.append("clipPath")
+		main_chart.append("clipPath")
 		    .attr("id", "chart-area")         
 		    .append("rect")
 		    .attr("width", width)
 		    .attr("height", height)
 		    .attr("fill", "grey");
 
-		var majors = chart.selectAll(".major")
+		var majors = main_chart.selectAll(".major")
 			.data(dataset)
 			.enter()
 			.append("g")
@@ -207,12 +233,12 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("cy", function(d) { return y(d[1]) })
 			.attr("r", 2.5)
 
-		chart.append("g")
+		main_chart.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
 			.call(xAxis);
 
-		chart.append("g")
+		main_chart.append("g")
 			.attr("class", "y axis")
 			.call(yAxis)
 		.append("text")
@@ -355,19 +381,19 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	function drawBarGraph(dataset) {
 		
 		svg
-			.attr("width", barChartWidth + 10)
+			.attr("width", barChartWidth + barMargin.left + barMargin.right)
 	    	.attr("height", ((barHeight + barPaddingTop) * numCases(dataset)) + barMargin.top + barMargin.bottom)
 
-		chart
+		main_chart
 			.data(dataset)
-			.attr('width', barWidth)
+			.attr('width', barChartWidth)
 			.attr('height', ((barHeight + barPaddingTop) * numCases(dataset)))
 			.attr('class', 'chart')
 			.attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
 		
 		b.domain([0, getUpperDomainForLatestYear(dataset)]);
 		
-		chart.append("g")
+		main_chart.append("g")
 			.attr("class", "b axis")
 			.call(barAxis)
 			// .append("text")
@@ -376,13 +402,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			// 	.attr("dy", ".71em")
 			// 	.text("Degrees Awarded in 2013");
 
-
-		chart.data(dataset)
-			.attr('width', width)
-			.attr('height', '');
-
-
-		var majors = chart.selectAll(".major")
+		var majors = main_chart.selectAll(".major")
 			.data(dataset)
 			.enter()
 			.append("g")
@@ -393,7 +413,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("class", "major")
 			.attr("data-major", function(d) {return d.major;})
 			.attr("data-school", function(d) {return d.school;})
-			.attr("transform", function(d, i) { return "translate(0," + i * (barHeight+barPaddingTop) + ")"; });
+			.attr("transform", function(d, i) { return "translate(0," + i * (barHeight + barPaddingTop) + ")"; });
 
 		var bground = majors.append('rect')
 			.attr('class', 'bground')
@@ -410,7 +430,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 		var text = majors.append('text')
 			.attr('class', 'name')
-			.attr("x", function(d) { return (barWidth - 10) - 5; })
+			.attr("x", function(d) { return (barWidth - barMargin.left) - barMargin.right; })
 			.attr("y", barHeight / 2)
 			.attr("dy", ".35em")
 			.attr("text-anchor", "end")
@@ -426,21 +446,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("fill", 'black')
 			.attr("font-weight", "normal")
 			.text(function(d) { return latestValue(d); });
-
-		majors
-			.on('mouseover', function(d) {
-				var m = d3.select('g[data-major="' + d.major + '"] rect.bar');
-				var n = d3.select('g[data-major="' + d.major + '"] rect.bground');
-				m.attr('opacity', 0.6);
-				n.attr('opacity', 0.3);
-			})
-			.on('mouseout', function(d) {
-				var m = d3.select('g[data-major="' + d.major + '"] rect.bar');
-				var n = d3.select('g[data-major="' + d.major + '"] rect.bground');
-				m.attr('opacity', 0.4);
-				n.attr('opacity', 1);
-			});
-
 	}
 
 	function updateBarGraph(dataset) {
@@ -452,7 +457,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		var duration = 0;
 		var ease = 'linear';
 
-		var t = chart.transition()
+		var t = main_chart.transition()
 			.duration(duration)
 			.ease(ease);
 
@@ -460,7 +465,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 		t.select(".b.axis").call(barAxis);
 
-		var majors = chart.selectAll(".major")
+		var majors = main_chart.selectAll(".major")
 			.data(dataset);
 
 		majors.transition()
@@ -486,7 +491,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.duration(duration)
 			.ease(ease)
 			.attr('class', 'name')
-			.attr("x", function(d) { return (barWidth - 10) - 5; })
+			.attr("x", function(d) { return (barWidth - 5) - 5; })
 			.attr("y", barHeight / 2);
 
 		var number = majors.selectAll('text.number');
@@ -497,17 +502,88 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("x", function(d) { return 5; })
 			.attr("y", barHeight / 2)
 			.text(function(d) { return latestValue(d); });
+	}
+
+	function createSmallGraphs(dataset) {
+
+	articles = d3.selectAll("div.article")
+		.each(function(d, i) {
+			self = this;
+			m = d3.select(this).attr('data-major');
+
+			svg = d3.select(this).selectAll("div.small_chart").append('svg')			
+				.attr("width", smallWidth + smallMargin.left + smallMargin.right)
+		    	.attr("height", smallHeight + smallMargin.top + smallMargin.bottom);
+
+		    small_chart = svg.append('g')
+				.attr('class', 'chart')
+				.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")")
+
+			small_chart.append("clipPath")
+			    .attr("id", "chart-area")         
+			    .append("rect")
+			    // .attr("width", smallWidth)
+			    // .attr("height", smallHeight)
+			    .attr("fill", "grey");
+
+			var majors = small_chart.selectAll(".major")
+				.data(dataset)
+				.enter()
+				.append("g")
+				.filter(function(d) { return (d.major == m); })
+				.attr("class", "major")
+				.attr("data-major", function(d) {return d.major;})
+				.attr("data-school", function(d) {return d.school;})
+
+			var path = majors.append("path")
+				.attr("class", "line")
+				.attr("d", function(d) { return smLine(d.values); })
+				.attr("clip-path", "url(#chart-area)")
+				.attr("stroke", function(d) { return purple })
+				.attr("opacity", .5)
+				.attr("stroke-width", 1.2)
+
+			var point = majors.append("g")
+				.attr("class", "line-points")
+				.attr('fill', purple);
+
+			var circle = point.selectAll('circle')
+				.data(function(d){return d.values})
+				.enter()
+				.append('circle')
+				.attr("cx", function(d) { return x(d[0]) })
+				.attr("cy", function(d) { return y(d[1]) })
+				.attr("r", 2.5)
+
+			small_chart.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + smallHeight + ")")
+				.call(smXAxis);
+
+			small_chart.append("g")
+				.attr("class", "y axis")
+				.call(smYAxis)
+			.append("text")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 6)
+				.attr("dy", ".71em")
+				.style("text-anchor", "end")
+				.text("Degrees");
+		});
+			
+
+			y.domain([0, getUpperDomain(dataset)]);
 
 
 	}
 
 	$( window ).resize( function() {
-		wid = $("div.chart").width()
+		wid = $("div.main_chart").width()
 		width = wid - margin.left - margin.right;
 		barChartWidth = wid - barMargin.left - barMargin.right;
-	    barWidth = wid - barMargin.right;
+	    barWidth = wid - barMargin.right - barMargin.right;
 
-		var charttype = chart.attr('data-charttype');
+		var charttype = main_chart.attr('data-charttype');
 		if (width > break2 && !isMobile) {
 
 			$('div.search').show();
@@ -530,8 +606,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("width", width)
 
 			if (charttype == 'bar') {
-				chart.selectAll('*').remove();
-				chart.attr('data-charttype', 'line');
+				main_chart.selectAll('*').remove();
+				main_chart.attr('data-charttype', 'line');
 				drawChart(dataset);
 			} else {
 				updateChart(dataset);
@@ -544,12 +620,12 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			$('p.instructions.bar').show();
 
 			svg
-				.attr("width", barChartWidth + 10)
+				.attr("width", barChartWidth + barMargin.left + barMargin.right)
 		    	.attr("height", ((barHeight + barPaddingTop) * numCases(dataset)) + barMargin.top + barMargin.bottom)
 
 			if (charttype == 'line') {
-				chart.selectAll('*').remove();
-				chart.attr('data-charttype', 'bar');
+				main_chart.selectAll('*').remove();
+				main_chart.attr('data-charttype', 'bar');
 				drawBarGraph(dataset);
 			} else {
 				updateBarGraph(dataset)	
