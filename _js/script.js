@@ -510,6 +510,29 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		articles = d3.selectAll("div.article").each(function(d, i) {
 			self = this;
 			m = d3.select(this).attr('data-major');
+			console.log(m);
+			m = m.split(",")
+			small_dataset = [];
+
+			for (var i = dataset.length - 1; i >= 0; i--) {
+				index = m.indexOf(dataset[i].major);
+				if (index >= 0) {
+					if (dataset[i].major == m) {
+						small_dataset.push(dataset[i]);
+					}
+				}
+			};
+
+			if (smallW < 350) {
+				smX.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
+			} else {
+				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
+			}
+			smX.range([0, smallWidth]);
+			smY.rangeRound([smallHeight, 0]);
+			
+			a = getUpperDomain(small_dataset);
+			smY.domain([0,a]);
 
 			svg = d3.select(this).selectAll("div.small_chart").append('svg')			
 				.attr("width", smallWidth + smallMargin.left + smallMargin.right)
@@ -520,7 +543,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")")
 
 			small_chart.append("clipPath")
-			    .attr("class", "chart-area")         
+			    .attr("id", "chartarea")         
 			    .append("rect")
 			    .attr("width", smallWidth)
 			    .attr("height", smallHeight)
@@ -538,8 +561,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			var path = majors.append("path")
 				.attr("class", "line")
 				.attr("d", function(d) { return smLine(d.values); })
-				.attr("clip-path", "url(.chart-area)")
+				.attr("clip-path", "url(#chartarea)")
 				.attr("stroke", function(d) { return purple })
+				.attr("fill", "none")
 				.attr("opacity", .5)
 				.attr("stroke-width", 1.2)
 
@@ -591,9 +615,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			} else {
 				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 			}
-			console.log(smallWidth)
 			smX.range([0, smallWidth]);
 			smY.rangeRound([smallHeight, 0]);
+			
+			a = getUpperDomain(small_dataset);
+			smY.domain([0,a]);
 
 			var t = small_chart.transition()
 				.duration(duration)
@@ -760,7 +786,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			selectedMajors.update(param);
 	    	updateDataset(dataset)
 	  	});	
-	};
+	}
 
 	function updateDataset(d) {
 		activeItems = [];
