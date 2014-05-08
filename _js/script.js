@@ -4,7 +4,7 @@ $(document).ready(function() {
 w = $("div.main_chart").width()
 h = 440;
 break1 = 575;
-break2 = 400;
+break2 = 388;
 
 smallW = $("div.major div.article div.small_chart").width()
 smallH = $("div.major div.article div.small_chart").height()
@@ -114,11 +114,12 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	};
 
 	//Small Charts
-	var smallMargin = {top: 5, right: 15, bottom: 5, left: 15},
-    smallWidth = smallW - smallMargin.left - smallMargin.right,
-    smallHeight = smallH - smallMargin.top - smallMargin.bottom;
+	var smallMargin = {top: 10, right: 30, bottom: 30, left: 30};
+    var smallWidth = smallW - smallMargin.left - smallMargin.right;
+    var smallHeight = smallH - smallMargin.top - smallMargin.bottom;
 	var smX = d3.time.scale()
-	    .range([0, smallWidth]);
+	    .range([0, smallWidth])
+	   	.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 	var smY = d3.scale.linear()
 		.rangeRound([smallHeight, 0]);
 	var smXAxis = d3.svg.axis()
@@ -174,7 +175,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		y.domain([0, getUpperDomain(dataset)]);
 
 		main_chart.append("clipPath")
-		    .attr("id", "chart-area")         
+		    .attr("id", "main_chart_area")         
 		    .append("rect")
 		    .attr("width", width)
 		    .attr("height", height)
@@ -214,7 +215,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		var path = majors.append("path")
 			.attr("class", "line")
 			.attr("d", function(d) { return line(d.values); })
-			.attr("clip-path", "url(#chart-area)")
+			.attr("clip-path", "url(#main_chart_area)")
 			.attr("stroke", function(d) { return purple })
 			.attr("opacity", .5)
 			.attr("stroke-width", 1.2)
@@ -258,7 +259,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		var duration = 200;
 		var ease = 'linear';
 
-		var t = chart.transition()
+		var t = main_chart.transition()
 			.duration(duration)
 			.attr("class", function(d){
 				if (param.activeItemsExist) {
@@ -272,7 +273,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		y.domain([0,param.upperDomain]);
 		t.select(".y.axis").call(yAxis);
 
-		var majors = chart.selectAll(".major")
+		var majors = main_chart.selectAll(".major")
 			.data(dataset, major)
 			.order();
 
@@ -506,8 +507,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 	function createSmallGraphs(dataset) {
 
-	articles = d3.selectAll("div.article")
-		.each(function(d, i) {
+		articles = d3.selectAll("div.article").each(function(d, i) {
 			self = this;
 			m = d3.select(this).attr('data-major');
 
@@ -516,14 +516,14 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		    	.attr("height", smallHeight + smallMargin.top + smallMargin.bottom);
 
 		    small_chart = svg.append('g')
-				.attr('class', 'chart')
+				.attr('class', 'small_chart')
 				.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")")
 
 			small_chart.append("clipPath")
-			    .attr("id", "chart-area")         
+			    .attr("class", "chart-area")         
 			    .append("rect")
-			    // .attr("width", smallWidth)
-			    // .attr("height", smallHeight)
+			    .attr("width", smallWidth)
+			    .attr("height", smallHeight)
 			    .attr("fill", "grey");
 
 			var majors = small_chart.selectAll(".major")
@@ -538,7 +538,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			var path = majors.append("path")
 				.attr("class", "line")
 				.attr("d", function(d) { return smLine(d.values); })
-				.attr("clip-path", "url(#chart-area)")
+				.attr("clip-path", "url(.chart-area)")
 				.attr("stroke", function(d) { return purple })
 				.attr("opacity", .5)
 				.attr("stroke-width", 1.2)
@@ -551,17 +551,23 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.data(function(d){return d.values})
 				.enter()
 				.append('circle')
-				.attr("cx", function(d) { return x(d[0]) })
-				.attr("cy", function(d) { return y(d[1]) })
+				.attr("cx", function(d) { return smX(d[0]) })
+				.attr("cy", function(d) { return smY(d[1]) })
 				.attr("r", 2.5)
 
+			if (smallW < 350) {
+				smX.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
+			} else {
+				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
+			}
+
 			small_chart.append("g")
-				.attr("class", "x axis")
+				.attr("class", "smX axis")
 				.attr("transform", "translate(0," + smallHeight + ")")
 				.call(smXAxis);
 
 			small_chart.append("g")
-				.attr("class", "y axis")
+				.attr("class", "smY axis")
 				.call(smYAxis)
 			.append("text")
 				.attr("transform", "rotate(-90)")
@@ -570,16 +576,72 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.style("text-anchor", "end")
 				.text("Degrees");
 		});
-			
+	}
 
-			y.domain([0, getUpperDomain(dataset)]);
+	function updateSmallGraphs(dataset) {
+		var duration = 100;
+		var ease = 'linear';
 
+		articles = d3.selectAll("div.article").each(function(d, i) {
+			self = this;
+			m = d3.select(this).attr('data-major');
 
+			if (smallW < 350) {
+				smX.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
+			} else {
+				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
+			}
+			console.log(smallWidth)
+			smX.range([0, smallWidth]);
+			smY.rangeRound([smallHeight, 0]);
+
+			var t = small_chart.transition()
+				.duration(duration)
+				.ease(ease);
+
+			t.select(".smX.axis")
+				.call(smXAxis);
+			t.select(".smY.axis")
+				.call(smYAxis);
+
+		    small_chart = svg.select('g.small_chart');
+		    small_chart.transition()
+		  		.duration(duration)
+				.ease(ease)
+			    .attr("width", smallWidth)
+			    .attr("height", smallHeight)
+				.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")");
+
+			small_chart.select("clipPath rect")
+			    .attr("width", smallWidth)
+			    .attr("height", smallHeight)
+			    .attr("fill", "grey");
+
+			var majors = small_chart.selectAll(".major");
+
+			var path = majors.selectAll("path");
+			path.transition()
+				.ease(ease)
+				.duration(duration)
+				.attr("d", function(d) { return smLine(d.values); })
+				.attr("clip-path", "url(.chart-area)");
+
+			var point = majors.selectAll("g");
+
+			var circle = point.selectAll('circle')
+			circle.transition()
+				.duration(duration)
+				.ease(ease)
+				.attr("cx", function(d) { return smX(d[0]) })
+				.attr("cy", function(d) { return smY(d[1]) })
+
+		});
 	}
 
 	$( window ).resize( function() {
 		wid = $("div.main_chart").width()
 		width = wid - margin.left - margin.right;
+
 		barChartWidth = wid - barMargin.left - barMargin.right;
 	    barWidth = wid - barMargin.right - barMargin.right;
 
@@ -595,15 +657,18 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			} else {
 				x.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 			}
+
 			x.range([0, width]);
-			d3.select(".x.axis").call(xAxis);
+			d3.select("svg.main_chart .x.axis").call(xAxis);
 
 			d3.select('svg.main_chart')
 				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom);
 
-			d3.select("#chart-area")
+			d3.select("svg.main_chart #main_chart_area")
 				.select("rect")
 				.attr("width", width)
+				.attr("height", height);
 
 			if (charttype == 'bar') {
 				main_chart.selectAll('*').remove();
@@ -619,7 +684,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			$('p.instructions.line').hide();
 			$('p.instructions.bar').show();
 
-			svg
+			d3.select('svg.main_chart')
 				.attr("width", barChartWidth + barMargin.left + barMargin.right)
 		    	.attr("height", ((barHeight + barPaddingTop) * numCases(dataset)) + barMargin.top + barMargin.bottom)
 
@@ -631,6 +696,23 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				updateBarGraph(dataset)	
 			}
 		}
+
+	    smallW = $("div.article div.small_chart").width();
+		smallH = $("div.article div.small_chart").height();
+		smallWidth = smallW - smallMargin.right - smallMargin.left; 
+		smallHeight = smallH - smallMargin.top - smallMargin.bottom
+
+		d3.selectAll('div.small_chart svg')
+			.attr("width", smallWidth + smallMargin.left + smallMargin.right)
+			.attr("height", smallHeight + smallMargin.top + smallMargin.bottom);
+
+		d3.selectAll("div.small_chart svg clipPath.chart-area")
+			.select("rect")
+			.attr("width", smallWidth)
+			.attr("height", smallHeight);
+
+		updateSmallGraphs(dataset);
+
 	});
 
 	function SelectedMajors() { 

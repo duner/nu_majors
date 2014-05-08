@@ -22,6 +22,7 @@ section.content {
 		@include reset-layout-direction();
 		
 		div.article {
+			@include fill-parent;
 			@include reset-layout-direction();
 			@include row($direction: LTR);
 			@include media($medium) {
@@ -42,27 +43,29 @@ section.content {
 					@include span-columns(10);		
 				}
 				@include media($medium) {
-					@include fill-parent;		
+					@include shift(0.5);
+					@include span-columns(10.5);		
 				}
 				@include media($small) {
-					@include fill-parent;		
+					@include span-columns(8);		
 				}
 			}
 
 			div.small_chart {
 				//background-color: $purple;
+				width: 100%;
 				@include media($large) {
 					@include span-columns(6);	
 					height: 300px;	
 				}
 				@include media($medium) {
 					@include fill-parent;	
-					height: 250px;	
+					height: 225px;	
 					margin-bottom: 1em;	
 				}
 				@include media($small) {
 					@include fill-parent;	
-					height: 200px;	
+					height: 175px;	
 					margin-bottom: 1em;	
 				}
 			}

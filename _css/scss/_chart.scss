@@ -65,25 +65,27 @@ div.main_chart {
 	}
 
 	g.chart[data-charttype="bar"] {
-
 		g.major:hover {
-			
 			rect.bground {
 				opacity: 0.3;
 			}
-
 			rect.bar {
 				opacity: 0.6;
 			}
 		
 		}
-
 	}
 
 }
-div.graph {
+
+div.small_chart {
 	svg text {
 	  font-size: 0.75em;
+	}
+	.axis path, .axis line {
+	  fill: none;
+	  stroke: black;
+	  shape-rendering: crispEdges;
 	}
 }
 

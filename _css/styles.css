@@ -557,8 +557,12 @@ div.main_chart {
   div.main_chart g.chart[data-charttype="bar"] g.major:hover rect.bar {
     opacity: 0.6; }
 
-div.graph svg text {
+div.small_chart svg text {
   font-size: 0.75em; }
+div.small_chart .axis path, div.small_chart .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges; }
 
 p.metainfo {
   display: none;
@@ -628,6 +632,7 @@ section.content {
       section.content div.major:last-child {
         margin-right: 0; } }
   section.content div.major div.article {
+    width: 100%;
     display: block; }
     section.content div.major div.article:after {
       content: "";
@@ -654,29 +659,42 @@ section.content {
           margin-left: 0; } }
     @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
       section.content div.major div.article div.text {
-        width: 100%; } }
-    @media screen and (max-width: 25em) {
-      section.content div.major div.article div.text {
-        width: 100%; } }
-    @media screen and (min-width: 46.9375em) {
-      section.content div.major div.article div.small_chart {
+        margin-right: 3.17993%;
         display: block;
         float: right;
-        margin-left: 1.75788%;
-        width: 36.40133%;
-        height: 300px; }
-        section.content div.major div.article div.small_chart:last-child {
+        margin-left: 2.35765%;
+        width: 87.20529%; }
+        section.content div.major div.article div.text:last-child {
           margin-left: 0; } }
-    @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
-      section.content div.major div.article div.small_chart {
-        width: 100%;
-        height: 250px;
-        margin-bottom: 1em; } }
     @media screen and (max-width: 25em) {
-      section.content div.major div.article div.small_chart {
-        width: 100%;
-        height: 200px;
-        margin-bottom: 1em; } }
+      section.content div.major div.article div.text {
+        display: block;
+        float: right;
+        margin-left: 3.57866%;
+        width: 100%; }
+        section.content div.major div.article div.text:last-child {
+          margin-left: 0; } }
+    section.content div.major div.article div.small_chart {
+      width: 100%; }
+      @media screen and (min-width: 46.9375em) {
+        section.content div.major div.article div.small_chart {
+          display: block;
+          float: right;
+          margin-left: 1.75788%;
+          width: 36.40133%;
+          height: 300px; }
+          section.content div.major div.article div.small_chart:last-child {
+            margin-left: 0; } }
+      @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+        section.content div.major div.article div.small_chart {
+          width: 100%;
+          height: 225px;
+          margin-bottom: 1em; } }
+      @media screen and (max-width: 25em) {
+        section.content div.major div.article div.small_chart {
+          width: 100%;
+          height: 175px;
+          margin-bottom: 1em; } }
 
 @media screen and (min-width: 46.9375em) {
   div.centertext {
