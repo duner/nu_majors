@@ -72,7 +72,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	var main_chart = d3.select("svg.main_chart").append("g")
 		.classed({'chart': true})
 
-	smallDate = d3.time.format("%y");
+	smallDate = d3.time.format("'%y");
 	fullDate = d3.time.format("%Y");
 
 	//Line Stuff
@@ -579,7 +579,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("cy", function(d) { return smY(d[1]) })
 				.attr("r", 2.5)
 
-			if (smallW < 350) {
+			if (smallW < 375) {
 				smXAxis.tickFormat(smallDate);
 			} else {
 				smXAxis.tickFormat(fullDate);
