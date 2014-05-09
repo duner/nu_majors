@@ -514,17 +514,16 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			m = m.split(",")
 			small_dataset = [];
 
+
 			for (var i = dataset.length - 1; i >= 0; i--) {
 				index = m.indexOf(dataset[i].major);
+				console.log(index);
 				if (index >= 0) {
-					if (dataset[i].major == m) {
-						small_dataset.push(dataset[i]);
-					}
+					small_dataset.push(dataset[i]);
 				}
-			};
-
+			}
 			if (smallW < 350) {
-				smX.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
+				smX.domain([new Date(2006, 0, 1), new Date(2013, 0, 1)]);
 			} else {
 				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
 			}
@@ -533,6 +532,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			
 			a = getUpperDomain(small_dataset);
 			smY.domain([0,a]);
+
+			console.log(small_dataset)
+			console.log(a)
 
 			svg = d3.select(this).selectAll("div.small_chart").append('svg')			
 				.attr("width", smallWidth + smallMargin.left + smallMargin.right)
@@ -579,12 +581,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("cy", function(d) { return smY(d[1]) })
 				.attr("r", 2.5)
 
-			if (smallW < 350) {
-				smX.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
-			} else {
-				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
-			}
-
 			small_chart.append("g")
 				.attr("class", "smX axis")
 				.attr("transform", "translate(0," + smallHeight + ")")
@@ -602,67 +598,67 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		});
 	}
 
-	function updateSmallGraphs(dataset) {
-		var duration = 100;
-		var ease = 'linear';
+	// function updateSmallGraphs(dataset) {
+	// 	var duration = 100;
+	// 	var ease = 'linear';
 
-		articles = d3.selectAll("div.article").each(function(d, i) {
-			self = this;
-			m = d3.select(this).attr('data-major');
+	// 	articles = d3.selectAll("div.article").each(function(d, i) {
+	// 		self = this;
+	// 		m = d3.select(this).attr('data-major');
 
-			if (smallW < 350) {
-				smX.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
-			} else {
-				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
-			}
-			smX.range([0, smallWidth]);
-			smY.rangeRound([smallHeight, 0]);
+	// 		if (smallW < 350) {
+	// 			smX.domain([new Date(2006, 0, 1), new Date(2013, 0, 1)]);
+	// 		} else {
+	// 			smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
+	// 		}
+	// 		smX.range([0, smallWidth]);
+	// 		smY.rangeRound([smallHeight, 0]);
 			
-			a = getUpperDomain(small_dataset);
-			smY.domain([0,a]);
+	// 		a = getUpperDomain(small_dataset);
+	// 		smY.domain([0,a]);
 
-			var t = small_chart.transition()
-				.duration(duration)
-				.ease(ease);
+	// 		var t = small_chart.transition()
+	// 			.duration(duration)
+	// 			.ease(ease);
 
-			t.select(".smX.axis")
-				.call(smXAxis);
-			t.select(".smY.axis")
-				.call(smYAxis);
+	// 		t.select(".smX.axis")
+	// 			.call(smXAxis);
+	// 		t.select(".smY.axis")
+	// 			.call(smYAxis);
 
-		    small_chart = svg.select('g.small_chart');
-		    small_chart.transition()
-		  		.duration(duration)
-				.ease(ease)
-			    .attr("width", smallWidth)
-			    .attr("height", smallHeight)
-				.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")");
+	// 	    small_chart = svg.select('g.small_chart');
+	// 	    small_chart.transition()
+	// 	  		.duration(duration)
+	// 			.ease(ease)
+	// 		    .attr("width", smallWidth)
+	// 		    .attr("height", smallHeight)
+	// 			.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")");
 
-			small_chart.select("clipPath rect")
-			    .attr("width", smallWidth)
-			    .attr("height", smallHeight)
-			    .attr("fill", "grey");
+	// 		small_chart.select("clipPath rect")
+	// 		    .attr("width", smallWidth)
+	// 		    .attr("height", smallHeight)
+	// 		    .attr("fill", "grey");
 
-			var majors = small_chart.selectAll(".major");
+	// 		var majors = small_chart.selectAll(".major");
 
-			var path = majors.selectAll("path");
-			path.transition()
-				.ease(ease)
-				.duration(duration)
-				.attr("d", function(d) { return smLine(d.values); })
-				.attr("clip-path", "url(.chart-area)");
+	// 		var path = majors.selectAll("path");
+	// 		path.transition()
+	// 			.ease(ease)
+	// 			.duration(duration)
+	// 			.attr("d", function(d) { return smLine(d.values); })
+	// 			.attr("clip-path", "url(.chart-area)");
 
-			var point = majors.selectAll("g");
+	// 		var point = majors.selectAll("g");
 
-			var circle = point.selectAll('circle')
-			circle.transition()
-				.duration(duration)
-				.ease(ease)
-				.attr("cx", function(d) { return smX(d[0]) })
-				.attr("cy", function(d) { return smY(d[1]) })
+	// 		var circle = point.selectAll('circle')
+	// 		circle.transition()
+	// 			.duration(duration)
+	// 			.ease(ease)
+	// 			.attr("cx", function(d) { return smX(d[0]) })
+	// 			.attr("cy", function(d) { return smY(d[1]) })
 
-		});
-	}
+	// 	});
+	// }
 
 	$( window ).resize( function() {
 		wid = $("div.main_chart").width()
@@ -728,16 +724,20 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		smallWidth = smallW - smallMargin.right - smallMargin.left; 
 		smallHeight = smallH - smallMargin.top - smallMargin.bottom
 
-		d3.selectAll('div.small_chart svg')
-			.attr("width", smallWidth + smallMargin.left + smallMargin.right)
-			.attr("height", smallHeight + smallMargin.top + smallMargin.bottom);
+		smCh = d3.selectAll('div.small_chart')
+		smCh.selectAll("*").remove()
+		createSmallGraphs(dataset)
 
-		d3.selectAll("div.small_chart svg clipPath.chart-area")
-			.select("rect")
-			.attr("width", smallWidth)
-			.attr("height", smallHeight);
+		// d3.selectAll('div.small_chart svg')
+		// 	.attr("width", smallWidth + smallMargin.left + smallMargin.right)
+		// 	.attr("height", smallHeight + smallMargin.top + smallMargin.bottom);
 
-		updateSmallGraphs(dataset);
+		// d3.selectAll("div.small_chart svg clipPath.chart-area")
+		// 	.select("rect")
+		// 	.attr("width", smallWidth)
+		// 	.attr("height", smallHeight);
+
+		// updateSmallGraphs(dataset);
 
 	});
 

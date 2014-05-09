@@ -43,8 +43,8 @@ section.content {
 					@include span-columns(10);		
 				}
 				@include media($medium) {
-					@include shift(0.5);
-					@include span-columns(10.5);		
+					// @include shift(1);
+					@include span-columns(12);		
 				}
 				@include media($small) {
 					@include span-columns(8);		

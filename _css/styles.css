@@ -659,11 +659,10 @@ section.content {
           margin-left: 0; } }
     @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
       section.content div.major div.article div.text {
-        margin-right: 3.17993%;
         display: block;
         float: right;
         margin-left: 2.35765%;
-        width: 87.20529%; }
+        width: 100%; }
         section.content div.major div.article div.text:last-child {
           margin-left: 0; } }
     @media screen and (max-width: 25em) {
