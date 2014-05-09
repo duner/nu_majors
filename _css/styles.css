@@ -408,13 +408,41 @@ body {
   font-family: 'Proxima-Nova'; }
 
 footer {
+  padding-top: 1em;
+  padding-bottom: 1em;
   background-color: #501f84;
-  width: 100%;
-  height: 100px; }
+  width: 100%; }
+  footer div.credits {
+    text-align: right;
+    color: #eadef7;
+    margin-top: 1em; }
+    footer div.credits:first-of-type {
+      margin-top: 0em; }
+    footer div.credits p {
+      margin-top: 0;
+      margin-bottom: 0.4em; }
+    footer div.credits a {
+      color: #d0b4ee;
+      text-decoration: none; }
+      footer div.credits a:hover {
+        text-decoration: underline; }
+    @media screen and (min-width: 46.9375em) {
+      footer div.credits {
+        font-size: 0.9em; } }
+    @media screen and (min-width: 25.0625em) and (max-width: 46.875em) {
+      footer div.credits {
+        font-size: 0.8em; } }
+    @media screen and (max-width: 25em) {
+      footer div.credits {
+        font-size: 0.8em; } }
+
+::selection {
+  background-color: #501f84;
+  color: white; }
 
 header {
   padding-top: 0em;
-  padding-bottom: 1.5em;
+  padding-bottom: 1em;
   background-color: rgba(80, 31, 132, 0.3);
   border-bottom-width: 2px;
   border-bottom-color: #501f84;
@@ -566,7 +594,7 @@ div.small_chart .axis path, div.small_chart .axis line {
 
 p.metainfo {
   display: none;
-  font-size: .7em;
+  font-size: .75em;
   text-align: center; }
   @media screen and (min-width: 46.9375em) {
     p.metainfo {
@@ -631,6 +659,13 @@ section.content {
       width: 100%; }
       section.content div.major:last-child {
         margin-right: 0; } }
+  section.content div.major h3 {
+    margin-bottom: 0em; }
+  section.content div.major h4 {
+    margin-top: 0.05em;
+    font-weight: normal;
+    color: #333333;
+    font-size: 0.95em; }
   section.content div.major div.article {
     width: 100%;
     display: block; }
@@ -645,8 +680,6 @@ section.content {
           content: "";
           display: table;
           clear: both; } }
-    section.content div.major div.article h3 {
-      margin-bottom: 1em; }
     section.content div.major div.article div.text p:first-of-type {
       margin-top: 0em; }
     @media screen and (min-width: 46.9375em) {

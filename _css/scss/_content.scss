@@ -20,7 +20,17 @@ section.content {
 		}
 		
 		@include reset-layout-direction();
-		
+		h3 {
+			margin-bottom: 0em;
+		}
+
+		h4 {
+			margin-top: 0.05em;
+			font-weight: normal;
+			color: $grey;
+			font-size: 0.95em;
+		}
+
 		div.article {
 			@include fill-parent;
 			@include reset-layout-direction();
@@ -29,10 +39,7 @@ section.content {
 				@include row($direction: RTL);	
 			}	
 
-			h3 {
-				margin-bottom: 1em;
-			}
-			
+
 			div.text {
 				p {
 					&:first-of-type {

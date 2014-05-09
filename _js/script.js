@@ -72,6 +72,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	var main_chart = d3.select("svg.main_chart").append("g")
 		.classed({'chart': true})
 
+	smallDate = d3.time.format("%y");
+	fullDate = d3.time.format("%Y");
+
 	//Line Stuff
 	var x = d3.time.scale()
 	    .range([0, width]);
@@ -108,6 +111,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	var barAxis = d3.svg.axis()
 		.scale(b)
 		.orient('top');
+
+	var barLimit = 50;
 
 	function latestValue(d) {
     	return d.values[d.values.length - 1][1];
@@ -407,7 +412,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.data(dataset)
 			.enter()
 			.append("g")
-			.filter(function(d) { return (latestValue(d) != 0) })
+			.filter(function(d) { 
+				a = latestValue(d)
+				return (a != 0) })
 			.sort(function(a, b) {
 				return d3.descending(latestValue(a), latestValue(b));
 			})
@@ -510,31 +517,22 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		articles = d3.selectAll("div.article").each(function(d, i) {
 			self = this;
 			m = d3.select(this).attr('data-major');
-			console.log(m);
 			m = m.split(",")
 			small_dataset = [];
 
 
 			for (var i = dataset.length - 1; i >= 0; i--) {
 				index = m.indexOf(dataset[i].major);
-				console.log(index);
 				if (index >= 0) {
 					small_dataset.push(dataset[i]);
 				}
 			}
-			if (smallW < 350) {
-				smX.domain([new Date(2006, 0, 1), new Date(2013, 0, 1)]);
-			} else {
-				smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
-			}
+
 			smX.range([0, smallWidth]);
 			smY.rangeRound([smallHeight, 0]);
 			
 			a = getUpperDomain(small_dataset);
 			smY.domain([0,a]);
-
-			console.log(small_dataset)
-			console.log(a)
 
 			svg = d3.select(this).selectAll("div.small_chart").append('svg')			
 				.attr("width", smallWidth + smallMargin.left + smallMargin.right)
@@ -580,6 +578,13 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("cx", function(d) { return smX(d[0]) })
 				.attr("cy", function(d) { return smY(d[1]) })
 				.attr("r", 2.5)
+
+			if (smallW < 350) {
+				smXAxis.tickFormat(smallDate);
+			} else {
+				smXAxis.tickFormat(fullDate);
+			}
+
 
 			small_chart.append("g")
 				.attr("class", "smX axis")
@@ -715,7 +720,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				main_chart.attr('data-charttype', 'bar');
 				drawBarGraph(dataset);
 			} else {
-				updateBarGraph(dataset)	
+				updateBarGraph(dataset)
 			}
 		}
 
@@ -906,6 +911,17 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		for (var i = dataset.length - 1; i >= 0; i--) {
 			v = latestValue(dataset[i])
 			if (v != 0) {
+				cases.push(dataset[i])
+			}
+		}
+		return cases.length
+	}
+
+	function numCasesWithinLimit(dataset) {
+		cases = [];
+		for (var i = dataset.length - 1; i >= 0; i--) {
+			v = latestValue(dataset[i])
+			if (v != 0 && v >= barLimit) {
 				cases.push(dataset[i])
 			}
 		}
