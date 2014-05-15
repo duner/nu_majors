@@ -4,10 +4,15 @@
 	<title>Majors</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=1">
 	<link rel="shortcut icon" href="http://media.northbynorthwestern.com/media/img/favicon-hi.ico">
-
+	
 	<script type="text/javascript" src="//use.typekit.net/dgb0ihx.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="_js/waypoints.min.js"></script>
+	<script src="_js/waypoints-sticky.min.js"></script>
+	<script src="_js/responsive-nav.min.js"></script>
+
 	<script src="_js/d3.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="_js/chosen/chosen.css">
 	<script src="_js/chosen/chosen.jquery.min.js"></script>
@@ -34,22 +39,28 @@
 				<p class="instructions line">Search for your major and compare it to how others have changed over the last ten years. Then keep reading to learn about some of the biggest changes over the last decade.</p>
 				<p class="instructions bar">To get a sense of the current situation, compare how popular each major was in 2013. Then keep reading to learn about some of the more noticable changes over the last decade.</p>
 			</div>
-			<div class="main_chart"></div>
+			<div class="main_chart" id="chart"></div>
 			<p class="metainfo">This data is courtesy the Northwestern University Institutional Research Office and can be <a href="../_data/Undergrad_Degrees_012814.csv">downloaded here</a>. Each year of data is for the school year ending in that year.</p>
 		</div>
 	</section>
 	<nav>
-		<ul>
-			<li><a href="">Economics</a></li>
-			<li><a href="">Mathematics</a></li>
-			<li><a href="">Computer Engineering</a></li>
-			<li><a href="">Urban Studies</a></li>
-			<li><a href="">Latina & Latino Studies</a></li>
-		</ul>
+		<div id="navbutton">
+			<span class="hamburger">&#9776</span>
+		</div>
+		<p class="current">Current</p>
+		<div class="container">
+			<ul>
+				<li><a href="#psych">Psychology</a></li> 
+				<li><a href="#econ">Economics</a></li>
+				<li><a href="#math">Mathematics</a></li>
+				<li><a href="#computer">Computer Engineering</a></li>
+				<li><a href="#new">New Majors</a></li>
+			</ul>
+		</div>
 	</nav>
 	<section class="content">
 		<div class="container">
-		<div class="major">
+		<div class="major" id="psych">
 			<h3>Psychology</h3>
 			<h4>Author</h4>
 			<div class="article" data-major="Psychology">
@@ -61,7 +72,7 @@
 				</div>
 			</div>	
 		</div>
-		<div class="major">
+		<div class="major" id="econ">
 			<h3>Economics</h3>
 			<h4>Author</h4>
 			<div class="article" data-major='Economics'>
@@ -73,7 +84,7 @@
 				</div>
 			</div>	
 		</div>
-		<div class="major">
+		<div class="major" id="math">
 			<h3>Mathematics</h3>
 			<h4>Author</h4>
 			<div class="article" data-major='Mathematics'>
@@ -87,7 +98,7 @@
 				</div>
 			</div>	
 		</div>
-		<div class="major">
+		<div class="major" id="computer">
 			<h3>Computer Engineering</h3>
 			<h4>Author</h4>
 			<div class="article" data-major='Computer Engineering'>
@@ -101,7 +112,7 @@
 				</div>
 			</div>	
 		</div>
-		<div class="major">
+		<div class="major" id="new">
 			<h3>New Majors</h3>
 			<h4>Author</h4>
 			<div class="article" data-major='African Studies,Middle East Studies,Latina & Latina Studies'>
@@ -118,6 +129,7 @@
 		<div class="container">
 			<div class="credits">
 				<p><strong>Design & Development</strong>: </a>Alex Duner</p>
+				<p><strong>Reporting</strong>: TK</p>
 				<p><a href="http://github.com/duner/nu_majors">Source code on GitHub</a></p>
 			</div>
 		</div>

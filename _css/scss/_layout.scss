@@ -9,10 +9,12 @@ body {
 }
 
 footer {
+	margin-top: 5em;
 	padding-top: 1em;
 	padding-bottom: 1em;
 	background-color: $purple;
 	width: 100%;
+	@include row();
 
 	div.credits {
 		text-align: right;
@@ -49,3 +51,4 @@ footer {
 	background-color: $purple;
 	color: white;
 }
+

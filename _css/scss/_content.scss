@@ -1,23 +1,37 @@
 section.content {
 	padding-bottom: 2em;
-	margin-bottom: 1em;
+	margin-bottom: 3em;
 	@include reset-all();
 	@include reset-layout-direction();
 
 	div.major {
+		text-align: justify !important;
+		padding-top: 2em;
+
 		@include media($large) {
 			@include reset-all();
 			@include shift(0);
 			@include span-columns(16);
+			&:last-of-type {
+				margin-bottom: 3em;
+			}
 		}
 		@include media($medium) {
-			@include shift(1);
-			@include span-columns(10);
+			@include shift(2);
+			@include span-columns(8);
+			&:last-of-type {
+				margin-bottom: 1em;
+			}
 		}
 		@include media($small) {
 			@include shift(0);
-			@include span-columns(8)
+			width: 100%;
+			&:last-of-type {
+				margin-bottom: 1em;
+			}
 		}
+
+
 		
 		@include reset-layout-direction();
 		h3 {
@@ -44,6 +58,10 @@ section.content {
 				p {
 					&:first-of-type {
 						margin-top: 0em;
+					}
+
+					&:last-of-type {
+						margin-bottom: 0em;
 					}
 				}
 				@include media($large) {

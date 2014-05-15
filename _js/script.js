@@ -1,6 +1,38 @@
 
 $(document).ready(function() {
 
+//Floating Nav Bar
+$nav = $('nav');
+$nav.waypoint('sticky');
+
+//Updating Nav States
+$article = $('div.major');
+$navItems = $('nav ul li a')
+
+$article.waypoint(function(direction){
+	var $active = $(this);
+	var id = $active.attr("id")
+	var name = $('div.major#' + id + '> h3').html();
+	var $current = $('p.current');
+
+	for (var i = $navItems.length - 1; i >= 0; i--) {
+		$item = $($navItems[i]);
+		link = $item.attr("href").substr(1);
+		if (link == id) {
+			$item.addClass("active");
+			$current.text(name);
+		} else {
+			$item.removeClass();
+		}
+	};
+
+});
+
+
+
+
+//ALL THE D3 STUFF//
+
 w = $("div.main_chart").width()
 h = 440;
 break1 = 575;
@@ -40,6 +72,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		}
 		dataset.push(data);
 	});
+
+	dataset1 = dataset;
 
 	colors = makeColorScheme()
 	purple = d3.rgb('#501F84');
@@ -153,7 +187,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	} else {
 		$('div.search').hide();
 		main_chart.attr('data-charttype', 'bar')
-		drawBarGraph(dataset)
+		drawBarGraph(dataset1)
 		$('p.instructions.line').hide();
 		$('p.instructions.bar').show();
 	}
@@ -252,7 +286,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			.attr("y", 6)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
-			.text("Degrees");
+			.text("Degrees Awarded");
 	}
 
 	function updateChart(dataset) {
@@ -564,7 +598,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("clip-path", "url(#chartarea)")
 				.attr("stroke", function(d) { return purple })
 				.attr("fill", "none")
-				.attr("opacity", .5)
 				.attr("stroke-width", 1.2)
 
 			var point = majors.append("g")
@@ -599,7 +632,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("y", 6)
 				.attr("dy", ".71em")
 				.style("text-anchor", "end")
-				.text("Degrees");
+				.text("Degrees Awarded");
 		});
 	}
 
@@ -718,9 +751,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			if (charttype == 'line') {
 				main_chart.selectAll('*').remove();
 				main_chart.attr('data-charttype', 'bar');
-				drawBarGraph(dataset);
+				drawBarGraph(dataset1);
 			} else {
-				updateBarGraph(dataset)
+				updateBarGraph(dataset1)
 			}
 		}
 
