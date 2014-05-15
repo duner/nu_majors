@@ -636,7 +636,6 @@ section.content {
   padding-bottom: 2em;
   margin-bottom: 3em; }
   section.content div.major {
-    text-align: justify !important;
     padding-top: 2em; }
     @media screen and (min-width: 48.5em) {
       section.content div.major {
@@ -651,11 +650,11 @@ section.content {
           margin-bottom: 3em; } }
     @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
       section.content div.major {
-        margin-left: 12.71973%;
+        margin-left: 6.35987%;
         display: block;
         float: left;
         margin-right: 2.35765%;
-        width: 65.88078%; }
+        width: 82.94039%; }
         section.content div.major:last-child {
           margin-right: 0; }
         section.content div.major:last-of-type {
@@ -768,6 +767,15 @@ section.content {
 nav {
   width: 100%;
   background-color: #501f84; }
+  @media screen and (min-width: 48.5em) {
+    nav {
+      height: 36px; } }
+  @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
+    nav {
+      height: none; } }
+  @media screen and (max-width: 25em) {
+    nav {
+      height: none; } }
   nav.stuck {
     position: fixed;
     top: 0; }
@@ -803,7 +811,6 @@ nav {
     margin: 0.5em 0em;
     margin-right: 0.5em;
     padding: 0.25em 1em !important;
-    font-weight: bold;
     background-color: rgba(255, 255, 255, 0.5);
     color: #501f84; }
     @media screen and (min-width: 48.5em) {
@@ -817,7 +824,13 @@ nav {
       nav p.current {
         float: right;
         text-align: right; } }
+  nav div.container {
+    height: 100%; }
+  nav div.navwrapper {
+    position: absolute; }
   nav ul {
+    position: relative;
+    background-color: #501f84;
     margin: 0.5em 0em;
     list-style: none;
     text-align: center;

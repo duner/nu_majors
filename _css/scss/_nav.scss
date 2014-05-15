@@ -1,5 +1,15 @@
 nav {
-
+	
+	@include media($large) {
+		height: 36px;
+	}
+	@include media($medium) {
+		height: none;
+	}
+	@include media($small) {
+		height: none;
+	}
+	
 	&.stuck {
 		position: fixed;
 		top: 0;
@@ -35,7 +45,6 @@ nav {
 		margin: 0.5em 0em;
 		margin-right: 0.5em;
 		padding: 0.25em 1em !important;
-		font-weight: bold;
 		background-color: transparentize(#FFFFFF, 0.5);
 		color: $purple;
 
@@ -52,9 +61,18 @@ nav {
 		}
 	}
 
-	div.container {}
+	div.container {
+		height: 100%;
+	}
+
+	div.navwrapper {
+		position: absolute;
+	}
 
 	ul {
+		position: relative;
+		background-color: $purple;
+
 		@include media($medium) {
 			display: none;
 		}

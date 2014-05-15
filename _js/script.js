@@ -8,12 +8,12 @@ $nav.waypoint('sticky');
 //Updating Nav States
 $article = $('div.major');
 $navItems = $('nav ul li a')
+$current = $('p.current');
 
 $article.waypoint(function(direction){
 	var $active = $(this);
 	var id = $active.attr("id")
 	var name = $('div.major#' + id + '> h3').html();
-	var $current = $('p.current');
 
 	for (var i = $navItems.length - 1; i >= 0; i--) {
 		$item = $($navItems[i]);
@@ -25,6 +25,12 @@ $article.waypoint(function(direction){
 			$item.removeClass();
 		}
 	};
+});
+
+$navItems.click(function(e) {
+	$this = $(this)
+	//$this.addClass("active");
+	$current.text($this.text());
 
 });
 
