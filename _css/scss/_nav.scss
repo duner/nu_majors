@@ -19,25 +19,42 @@ nav {
 	background-color: $purple;
 
 	div#navbutton {
-		background-color: lighten($purple, 60%);
-		&:hover {
-			background-color: lighten($purple, 40%);
-		}
-		@include media($large) {
-			display: none;
-		}
-		@include media($medium) {
-			@include span-columns(1);
-		}
-		@include media($small) {
-			@include span-columns(1);
-		}
 
-		span.hamburger {
+		p.hamburger {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-users-select: none;
+			-ms-user-select: none;
+			user-select: none;
+
+			cursor: pointer;
+			@include transition(all 0.5s);
+
+			
+			color: $purple;
+			background-color: transparentize(#FFFFFF, 0.3);
+			&:hover {
+				background-color: transparentize(#FFFFFF, 0.5);
+			}
+
+			margin: 0.5em 0em;
+			margin-left: 0.5em;
+			padding: 0.25em 1em !important;
+
+
+			@include media($large) {
+				display: none;
+			}
+			@include media($medium) {
+				float: left;
+				text-align: right;
+			}
+			@include media($small) {
+				float: left;
+				text-align: right;
+			}
 			text-align: center;
-			padding: 0.5em;
-			font-size: 1.5em;
-			height: 100%;
 		}
 	}
 
@@ -47,7 +64,11 @@ nav {
 		padding: 0.25em 1em !important;
 		background-color: transparentize(#FFFFFF, 0.5);
 		color: $purple;
+		@include transition(all 0.5s);
 
+		&:hover {
+			background-color: transparentize(#FFFFFF, 0.2);			
+		}
 		@include media($large) {
 			display: none;
 		}
@@ -59,6 +80,8 @@ nav {
 			float: right;
 			text-align: right;
 		}
+
+
 	}
 
 	div.container {

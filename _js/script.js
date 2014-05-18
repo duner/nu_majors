@@ -1,42 +1,6 @@
 
 $(document).ready(function() {
 
-//Floating Nav Bar
-$nav = $('nav');
-$nav.waypoint('sticky');
-
-//Updating Nav States
-$article = $('div.major');
-$navItems = $('nav ul li a')
-$current = $('p.current');
-
-$article.waypoint(function(direction){
-	var $active = $(this);
-	var id = $active.attr("id")
-	var name = $('div.major#' + id + '> h3').html();
-
-	for (var i = $navItems.length - 1; i >= 0; i--) {
-		$item = $($navItems[i]);
-		link = $item.attr("href").substr(1);
-		if (link == id) {
-			$item.addClass("active");
-			$current.text(name);
-		} else {
-			$item.removeClass();
-		}
-	};
-});
-
-$navItems.click(function(e) {
-	$this = $(this)
-	//$this.addClass("active");
-	$current.text($this.text());
-
-});
-
-
-
-
 //ALL THE D3 STUFF//
 
 w = $("div.main_chart").width()
@@ -979,5 +943,41 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	}
 
 });
+
+//ALL THE OTHER STUFF
+//Floating Nav Bar
+$nav = $('nav');
+$nav.waypoint('sticky');
+
+//Updating Nav States
+$article = $('div.major');
+$navItems = $('nav ul li a')
+$current = $('p.current');
+
+$article.waypoint(function(direction){
+	var $active = $(this);
+	var id = $active.attr("id")
+	var name = $('div.major#' + id + '> h3').html();
+
+	for (var i = $navItems.length - 1; i >= 0; i--) {
+		$item = $($navItems[i]);
+		link = $item.attr("href").substr(1);
+		if (link == id) {
+			$item.addClass("active");
+			$current.text(name);
+		} else {
+			$item.removeClass();
+		}
+	};
+});
+
+$navItems.click(function(e) {
+	$this = $(this)
+	//$this.addClass("active");
+	$current.text($this.text());
+
+});
+
+
 
 });

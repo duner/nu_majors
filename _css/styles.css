@@ -779,40 +779,47 @@ nav {
   nav.stuck {
     position: fixed;
     top: 0; }
-  nav div#navbutton {
-    background-color: #eadef7; }
-    nav div#navbutton:hover {
-      background-color: #b68be4; }
+  nav div#navbutton p.hamburger {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-users-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+    color: #501f84;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 0.5em 0em;
+    margin-left: 0.5em;
+    padding: 0.25em 1em !important;
+    text-align: center; }
+    nav div#navbutton p.hamburger:hover {
+      background-color: rgba(255, 255, 255, 0.5); }
     @media screen and (min-width: 48.5em) {
-      nav div#navbutton {
+      nav div#navbutton p.hamburger {
         display: none; } }
     @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-      nav div#navbutton {
-        display: block;
+      nav div#navbutton p.hamburger {
         float: left;
-        margin-right: 2.35765%;
-        width: 6.17215%; }
-        nav div#navbutton:last-child {
-          margin-right: 0; } }
+        text-align: right; } }
     @media screen and (max-width: 25em) {
-      nav div#navbutton {
-        display: block;
+      nav div#navbutton p.hamburger {
         float: left;
-        margin-right: 3.57866%;
-        width: 9.36867%; }
-        nav div#navbutton:last-child {
-          margin-right: 0; } }
-    nav div#navbutton span.hamburger {
-      text-align: center;
-      padding: 0.5em;
-      font-size: 1.5em;
-      height: 100%; }
+        text-align: right; } }
   nav p.current {
     margin: 0.5em 0em;
     margin-right: 0.5em;
     padding: 0.25em 1em !important;
     background-color: rgba(255, 255, 255, 0.5);
-    color: #501f84; }
+    color: #501f84;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s; }
+    nav p.current:hover {
+      background-color: rgba(255, 255, 255, 0.8); }
     @media screen and (min-width: 48.5em) {
       nav p.current {
         display: none; } }
