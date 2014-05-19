@@ -896,8 +896,11 @@ div.navwrapper {
             color: #501f84; } }
     @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
       div.navwrapper nav {
+        display: none;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.7); }
+        div.navwrapper nav.active {
+          display: block; }
         div.navwrapper nav ul {
           display: block;
           margin-top: 0;
@@ -907,17 +910,27 @@ div.navwrapper {
             display: block; }
             div.navwrapper nav ul li a {
               display: block;
-              padding-top: .6em;
-              padding-bottom: .6em;
+              padding-top: .5em !important;
+              padding-bottom: .5em !important;
               background-color: rgba(255, 255, 255, 0.2);
+              border-bottom-color: rgba(255, 255, 255, 0.6);
+              border-bottom-style: solid;
+              border-bottom-width: 1px;
               width: 100%; }
-              div.navwrapper nav ul li a:hover, div.navwrapper nav ul li a:active {
+              div.navwrapper nav ul li a:hover {
                 background-color: rgba(255, 255, 255, 0.5);
-                color: #501f84; } }
+                color: #501f84; }
+            div.navwrapper nav ul li:first-of-type a {
+              border-top-color: rgba(255, 255, 255, 0.6);
+              border-top-style: solid;
+              border-top-width: 1px; } }
     @media screen and (max-width: 25em) {
       div.navwrapper nav {
+        display: none;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.7); }
+        div.navwrapper nav.active {
+          display: block; }
         div.navwrapper nav ul {
           display: block;
           margin-top: 0;
@@ -927,37 +940,17 @@ div.navwrapper {
             display: block; }
             div.navwrapper nav ul li a {
               display: block;
-              padding-top: .6em;
-              padding-bottom: .6em;
+              padding-top: .5em !important;
+              padding-bottom: .5em !important;
               background-color: rgba(255, 255, 255, 0.2);
+              border-bottom-color: rgba(255, 255, 255, 0.6);
+              border-bottom-style: solid;
+              border-bottom-width: 1px;
               width: 100%; }
-              div.navwrapper nav ul li a:hover, div.navwrapper nav ul li a:active {
+              div.navwrapper nav ul li a:hover {
                 background-color: rgba(255, 255, 255, 0.5);
-                color: #501f84; } }
-
-@media screen and (max-width: 25em) {
-  .js .nav-collapse {
-    clip: rect(0 0 0 0);
-    max-height: 0;
-    position: absolute;
-    display: block;
-    overflow: hidden;
-    zoom: 1; }
-
-  .nav-collapse.opened {
-    max-height: 9999px; }
-
-  .disable-pointer-events {
-    pointer-events: none !important; } }
-@media screen and (min-width: 48.5em) {
-  .js .nav-collapse.opened {
-    position: absolute !important; }
-
-  .js .nav-collapse.closed {
-    max-height: none; } }
-@media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-  .js .nav-collapse.opened {
-    position: absolute !important; }
-
-  .js .nav-collapse.closed {
-    max-height: none; } }
+                color: #501f84; }
+            div.navwrapper nav ul li:first-of-type a {
+              border-top-color: rgba(255, 255, 255, 0.6);
+              border-top-style: solid;
+              border-top-width: 1px; } }

@@ -1,4 +1,8 @@
 @mixin responsive-nav {
+	display: none;
+	&.active {
+		display: block;
+	}
 	width: 100%;
 	background-color: transparentize(#FFFFFF, 0.3);
 	ul {
@@ -7,17 +11,30 @@
 		margin-bottom: 0;
 		text-align: left;
 		li {
-			
 			display: block;
 			a {
 				display: block;
-				padding-top: .6em;
-				padding-bottom: .6em;
+				padding-top: .5em !important;
+				padding-bottom: .5em !important;
 				background-color: transparentize(#FFFFFF, 0.8);
+				border-bottom-color: transparentize(#FFFFFF, 0.4);
+				border-bottom-style: solid;
+				border-bottom-width: 1px;
 				width: 100%;
-				&:hover, &:active {
+				&:hover {
 					background-color: transparentize(#FFFFFF, 0.5);
 					color: $purple;
+				}
+			}
+			&:first-of-type {
+				a {
+					border-top-color: transparentize(#FFFFFF, 0.4);
+					border-top-style: solid;
+					border-top-width: 1px;
+				}
+			}
+			&:last-of-type {
+				a {
 				}
 			}
 		}
@@ -186,42 +203,42 @@ div.navwrapper {
 }
 
 
-//Responsive Nav
+// //Responsive Nav
 
-@include media($small) {
-	.js .nav-collapse {
-		clip: rect(0 0 0 0);
-		max-height: 0;
-		position: absolute;
-		display: block;
-		overflow: hidden;
-		zoom: 1;
-	}
+// @include media($small) {
+// 	.js .nav-collapse {
+// 		clip: rect(0 0 0 0);
+// 		max-height: 0;
+// 		position: absolute;
+// 		display: block;
+// 		overflow: hidden;
+// 		zoom: 1;
+// 	}
 
-	.nav-collapse.opened {
-	  max-height: 9999px;
-	}
+// 	.nav-collapse.opened {
+// 	  max-height: 9999px;
+// 	}
 	
-	.disable-pointer-events {
-		pointer-events: none !important;
-	}
-}
+// 	.disable-pointer-events {
+// 		pointer-events: none !important;
+// 	}
+// }
 
-@include media($large) {
-	.js .nav-collapse.opened {
-		position: absolute !important;
-	}
-	.js .nav-collapse.closed {
-		max-height: none;
-	}
-}
+// @include media($large) {
+// 	.js .nav-collapse.opened {
+// 		position: absolute !important;
+// 	}
+// 	.js .nav-collapse.closed {
+// 		max-height: none;
+// 	}
+// }
 
-@include media($medium) {
-	.js .nav-collapse.opened {
-		position: absolute !important;
-	}
-	.js .nav-collapse.closed {
-		max-height: none;
-	}
-}
+// @include media($medium) {
+// 	.js .nav-collapse.opened {
+// 		position: absolute !important;
+// 	}
+// 	.js .nav-collapse.closed {
+// 		max-height: none;
+// 	}
+// }
 
