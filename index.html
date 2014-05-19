@@ -12,7 +12,7 @@
 	<script src="_js/waypoints.min.js"></script>
 	<script src="_js/waypoints-sticky.min.js"></script>
 	<script src="_js/responsive-nav.min.js"></script>
-	<script src="_js/"></script>
+	<script src="_js/smooth-scroll.js"></script>
 	
 	<script src="_js/d3.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="_js/chosen/chosen.css">
@@ -43,7 +43,7 @@
 			<p class="metainfo">This data is courtesy the Northwestern University Institutional Research Office and can be <a href="../_data/Undergrad_Degrees_012814.csv">downloaded here</a>. Each year of data is for the school year ending in that year.</p>
 		</div>
 	</section>
-	<div class="navwrapper">
+	<div class="navwrapper data-scroll-header">
 		<div class="navmeta">
 			<div id="navToggle">
 				<p class="hamburger">&#9776</span>
@@ -53,11 +53,11 @@
 		<div class="navcontainer">
 			<nav class="nav-collapse">
 				<ul>
-					<li><a href="#psych">Psychology</a></li> 
-					<li><a href="#econ">Economics</a></li>
-					<li><a href="#math">Mathematics</a></li>
-					<li><a href="#computer">Computer Engineering</a></li>
-					<li><a href="#new">New Majors</a></li>
+					<li><a data-scroll href="#psych">Psychology</a></li> 
+					<li><a data-scroll href="#econ">Economics</a></li>
+					<li><a data-scroll href="#math">Mathematics</a></li>
+					<li><a data-scroll href="#computer">Computer Engineering</a></li>
+					<li><a data-scroll href="#new">New Majors</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -141,6 +141,7 @@
 	
 	<script src="_js/script.js"></script>
 	<script>
+	    smoothScroll.init();
 		// var navigation = responsiveNav(".nav-collapse", {
 		// 	animate: true,
 		// 	transition: 100,

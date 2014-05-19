@@ -971,18 +971,26 @@ $article.waypoint(function(direction){
 	};
 });
 
-$navItems.click(function(e) {
-	$this = $(this)
-	//$this.addClass("active");
-	$current.text($this.text());
-});
-
 
 $navToggle = $('#navToggle');
 $nav = $('nav');
 $navToggle.click(function() {
 	$nav.toggleClass("active");
-})
+	$nav.toggleClass("opened");
+
+	if ($nav.hasClass("opened")) {
+		$navItems.click(function(){
+			$nav.removeClass("active");
+			$nav.removeClass("opened");
+		})
+	}
+});
+
+$navItems.click(function(e) {
+	$this = $(this)
+	$this.addClass("active");
+	//$current.text($this.text());
+});
 
 
 });
