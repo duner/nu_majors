@@ -16,7 +16,6 @@
 	<script src="_js/d3.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="_js/chosen/chosen.css">
 	<script src="_js/chosen/chosen.jquery.min.js"></script>
-	<script src="_js/script.js"></script>
 	<link rel="stylesheet" href="_css/styles.css">
 </head>
 <body>
@@ -43,13 +42,15 @@
 			<p class="metainfo">This data is courtesy the Northwestern University Institutional Research Office and can be <a href="../_data/Undergrad_Degrees_012814.csv">downloaded here</a>. Each year of data is for the school year ending in that year.</p>
 		</div>
 	</section>
-	<nav>
-		<div id="navbutton">
-			<p class="hamburger">&#9776</span>
+	<div class="navwrapper">
+		<div class="navmeta">
+			<div id="navToggle">
+				<p class="hamburger">&#9776</span>
+			</div>
+			<p class="current">Psychology</p>
 		</div>
-		<p class="current">Psychology</p>
-		<div class="container">
-			<div class="navwrapper">
+		<div class="navcontainer">
+			<nav class="nav-collapse">
 				<ul>
 					<li><a href="#psych">Psychology</a></li> 
 					<li><a href="#econ">Economics</a></li>
@@ -57,9 +58,9 @@
 					<li><a href="#computer">Computer Engineering</a></li>
 					<li><a href="#new">New Majors</a></li>
 				</ul>
-			</div>
+			</nav>
 		</div>
-	</nav>
+	</div>
 	<section class="content">
 		<div class="container">
 		<div class="major" id="psych">
@@ -136,5 +137,16 @@
 			</div>
 		</div>
 	</footer>
+	
+	<script src="_js/script.js"></script>
+	<script>
+		var navigation = responsiveNav(".nav-collapse", {
+			animate: true,
+			transition: 100,
+			insert: "before",
+			customToggle: "#navToggle"
+		});
+
+	</script>
 </body>
 </html>

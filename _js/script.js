@@ -946,7 +946,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 //ALL THE OTHER STUFF
 //Floating Nav Bar
-$nav = $('nav');
+$nav = $('div.navwrapper');
 $nav.waypoint('sticky');
 
 //Updating Nav States
@@ -975,7 +975,6 @@ $navItems.click(function(e) {
 	$this = $(this)
 	//$this.addClass("active");
 	$current.text($this.text());
-
 });
 
 

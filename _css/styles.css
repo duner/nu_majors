@@ -764,22 +764,46 @@ section.content {
     div.centertext:last-child {
       margin-right: 0; } }
 
-nav {
+div.navwrapper {
   width: 100%;
   background-color: #501f84; }
   @media screen and (min-width: 48.5em) {
-    nav {
+    div.navwrapper {
       height: 36px; } }
   @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-    nav {
-      height: none; } }
+    div.navwrapper {
+      height: none; }
+      div.navwrapper div.navmeta {
+        display: block; }
+        div.navwrapper div.navmeta:after {
+          content: "";
+          display: table;
+          clear: both; }
+      div.navwrapper nav {
+        display: block; }
+        div.navwrapper nav:after {
+          content: "";
+          display: table;
+          clear: both; } }
   @media screen and (max-width: 25em) {
-    nav {
-      height: none; } }
-  nav.stuck {
+    div.navwrapper {
+      height: none; }
+      div.navwrapper div.navmeta {
+        display: block; }
+        div.navwrapper div.navmeta:after {
+          content: "";
+          display: table;
+          clear: both; }
+      div.navwrapper nav {
+        display: block; }
+        div.navwrapper nav:after {
+          content: "";
+          display: table;
+          clear: both; } }
+  div.navwrapper.stuck {
     position: fixed;
     top: 0; }
-  nav div#navbutton p.hamburger {
+  div.navwrapper div#navToggle p.hamburger {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -796,20 +820,20 @@ nav {
     margin-left: 0.5em;
     padding: 0.25em 1em !important;
     text-align: center; }
-    nav div#navbutton p.hamburger:hover {
+    div.navwrapper div#navToggle p.hamburger:hover {
       background-color: rgba(255, 255, 255, 0.5); }
     @media screen and (min-width: 48.5em) {
-      nav div#navbutton p.hamburger {
+      div.navwrapper div#navToggle p.hamburger {
         display: none; } }
     @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-      nav div#navbutton p.hamburger {
+      div.navwrapper div#navToggle p.hamburger {
         float: left;
         text-align: right; } }
     @media screen and (max-width: 25em) {
-      nav div#navbutton p.hamburger {
+      div.navwrapper div#navToggle p.hamburger {
         float: left;
         text-align: right; } }
-  nav p.current {
+  div.navwrapper p.current {
     margin: 0.5em 0em;
     margin-right: 0.5em;
     padding: 0.25em 1em !important;
@@ -818,45 +842,122 @@ nav {
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     transition: all 0.5s; }
-    nav p.current:hover {
+    div.navwrapper p.current:hover {
       background-color: rgba(255, 255, 255, 0.8); }
     @media screen and (min-width: 48.5em) {
-      nav p.current {
+      div.navwrapper p.current {
         display: none; } }
     @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-      nav p.current {
+      div.navwrapper p.current {
         float: right;
         text-align: right; } }
     @media screen and (max-width: 25em) {
-      nav p.current {
+      div.navwrapper p.current {
         float: right;
         text-align: right; } }
-  nav div.container {
-    height: 100%; }
-  nav div.navwrapper {
+  div.navwrapper div.navmeta {
+    display: block !important; }
+  @media screen and (min-width: 48.5em) {
+    div.navwrapper div.navcontainer {
+      max-width: 56.25em;
+      margin-left: auto;
+      margin-right: auto; }
+      div.navwrapper div.navcontainer:after {
+        content: "";
+        display: table;
+        clear: both; } }
+  div.navwrapper nav {
     position: absolute; }
-  nav ul {
-    position: relative;
-    background-color: #501f84;
-    margin: 0.5em 0em;
-    list-style: none;
-    text-align: center;
-    -webkit-padding-start: 0em; }
+    div.navwrapper nav ul {
+      position: relative;
+      background-color: #501f84;
+      list-style: none;
+      text-align: center;
+      -webkit-padding-start: 0em; }
+      div.navwrapper nav ul li {
+        position: relative; }
+        div.navwrapper nav ul li a {
+          padding: 0.25em 1em !important;
+          color: white;
+          text-decoration: none; }
+    @media screen and (min-width: 48.5em) {
+      div.navwrapper nav ul {
+        margin: 0.5em 0em; }
+        div.navwrapper nav ul li {
+          display: inline; }
+          div.navwrapper nav ul li a:first-of-type {
+            padding-left: 0em; }
+          div.navwrapper nav ul li a:last-of-type {
+            padding-right: 0em; }
+          div.navwrapper nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.3); }
+          div.navwrapper nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #501f84; } }
     @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-      nav ul {
-        display: none; } }
+      div.navwrapper nav {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.7); }
+        div.navwrapper nav ul {
+          display: block;
+          margin-top: 0;
+          margin-bottom: 0;
+          text-align: left; }
+          div.navwrapper nav ul li {
+            display: block; }
+            div.navwrapper nav ul li a {
+              display: block;
+              padding-top: .6em;
+              padding-bottom: .6em;
+              background-color: rgba(255, 255, 255, 0.2);
+              width: 100%; }
+              div.navwrapper nav ul li a:hover, div.navwrapper nav ul li a:active {
+                background-color: rgba(255, 255, 255, 0.5);
+                color: #501f84; } }
     @media screen and (max-width: 25em) {
-      nav ul {
-        display: none; } }
-    nav ul li {
-      display: inline;
-      position: relative; }
-      nav ul li a {
-        padding: 0.25em 1em !important;
-        color: white;
-        text-decoration: none; }
-        nav ul li a:hover {
-          background-color: rgba(255, 255, 255, 0.3); }
-        nav ul li a.active {
-          background-color: rgba(255, 255, 255, 0.5);
-          color: #501f84; }
+      div.navwrapper nav {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.7); }
+        div.navwrapper nav ul {
+          display: block;
+          margin-top: 0;
+          margin-bottom: 0;
+          text-align: left; }
+          div.navwrapper nav ul li {
+            display: block; }
+            div.navwrapper nav ul li a {
+              display: block;
+              padding-top: .6em;
+              padding-bottom: .6em;
+              background-color: rgba(255, 255, 255, 0.2);
+              width: 100%; }
+              div.navwrapper nav ul li a:hover, div.navwrapper nav ul li a:active {
+                background-color: rgba(255, 255, 255, 0.5);
+                color: #501f84; } }
+
+@media screen and (max-width: 25em) {
+  .js .nav-collapse {
+    clip: rect(0 0 0 0);
+    max-height: 0;
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    zoom: 1; }
+
+  .nav-collapse.opened {
+    max-height: 9999px; }
+
+  .disable-pointer-events {
+    pointer-events: none !important; } }
+@media screen and (min-width: 48.5em) {
+  .js .nav-collapse.opened {
+    position: absolute !important; }
+
+  .js .nav-collapse.closed {
+    max-height: none; } }
+@media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
+  .js .nav-collapse.opened {
+    position: absolute !important; }
+
+  .js .nav-collapse.closed {
+    max-height: none; } }

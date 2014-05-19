@@ -1,13 +1,51 @@
-nav {
+@mixin responsive-nav {
+	width: 100%;
+	background-color: transparentize(#FFFFFF, 0.3);
+	ul {
+		display: block;
+		margin-top: 0;
+		margin-bottom: 0;
+		text-align: left;
+		li {
+			
+			display: block;
+			a {
+				display: block;
+				padding-top: .6em;
+				padding-bottom: .6em;
+				background-color: transparentize(#FFFFFF, 0.8);
+				width: 100%;
+				&:hover, &:active {
+					background-color: transparentize(#FFFFFF, 0.5);
+					color: $purple;
+				}
+			}
+		}
+	}
+}
+
+div.navwrapper {
 	
 	@include media($large) {
 		height: 36px;
 	}
 	@include media($medium) {
 		height: none;
+		div.navmeta {
+			@include row();
+		}
+		nav {
+			@include row();
+		}
 	}
 	@include media($small) {
 		height: none;
+		div.navmeta {
+			@include row();
+		}
+		nav {
+			@include row();
+		}
 	}
 	
 	&.stuck {
@@ -18,7 +56,7 @@ nav {
 	width: 100%;
 	background-color: $purple;
 
-	div#navbutton {
+	div#navToggle {
 
 		p.hamburger {
 			-webkit-touch-callout: none;
@@ -83,56 +121,107 @@ nav {
 
 
 	}
-
-	div.container {
-		height: 100%;
+	div.navmeta {
+		display: block !important;
 	}
 
-	div.navwrapper {
+	div.navcontainer {
+		@include media($large) {
+			@include outer-container;
+		}
+ 	}
+
+	nav {
 		position: absolute;
-	}
 
-	ul {
-		position: relative;
-		background-color: $purple;
+		ul {
+			position: relative;
+			background-color: $purple;
+			list-style: none;
+			text-align: center;
+			-webkit-padding-start: 0em;
 
+			li {
+				position: relative;
+
+				a {
+					padding: 0.25em 1em !important;
+					color: white;
+					text-decoration: none;
+				}
+			}
+		}
+	
+		@include media($large) {
+			ul {
+				margin: 0.5em 0em;
+				li {
+					display: inline;
+
+					a {
+						&:first-of-type {
+							padding-left: 0em;
+						}
+						&:last-of-type {
+							padding-right: 0em;
+						}
+						&:hover {
+							background-color: transparentize(#FFFFFF, 0.7);
+						}
+						&.active {
+							background-color: transparentize(#FFFFFF, 0.5);
+							color: $purple;
+						}
+					}
+				}
+			}
+		}
 		@include media($medium) {
-			display: none;
+			@include responsive-nav;
 		}
 		@include media($small) {
-			display: none;
-		}
-
-		margin: 0.5em 0em;
-		list-style: none;
-		text-align: center;
-		-webkit-padding-start: 0em;
-
-		li {
-			display: inline;
-			position: relative;
-
-			a {
-				padding: 0.25em 1em !important;
-				color: white;
-				text-decoration: none;
-
-				// &:first-of-type {
-				// 	padding-left: 0em;
-				// }
-				// &:last-of-type {
-				// 	padding-right: 0em;
-				// }
-
-				&:hover {
-					background-color: transparentize(#FFFFFF, 0.7);
-				}
-				&.active {
-					background-color: transparentize(#FFFFFF, 0.5);
-					color: $purple;
-				}
-
-			}
+			@include responsive-nav;
 		}
 	}
 }
+
+
+//Responsive Nav
+
+@include media($small) {
+	.js .nav-collapse {
+		clip: rect(0 0 0 0);
+		max-height: 0;
+		position: absolute;
+		display: block;
+		overflow: hidden;
+		zoom: 1;
+	}
+
+	.nav-collapse.opened {
+	  max-height: 9999px;
+	}
+	
+	.disable-pointer-events {
+		pointer-events: none !important;
+	}
+}
+
+@include media($large) {
+	.js .nav-collapse.opened {
+		position: absolute !important;
+	}
+	.js .nav-collapse.closed {
+		max-height: none;
+	}
+}
+
+@include media($medium) {
+	.js .nav-collapse.opened {
+		position: absolute !important;
+	}
+	.js .nav-collapse.closed {
+		max-height: none;
+	}
+}
+
