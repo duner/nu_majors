@@ -17,7 +17,7 @@ footer {
 	@include row();
 
 	div.credits {
-		text-align: right;
+		text-align: left;
 		color: lighten($purple, 60%);
 		margin-top: 1em;
 		&:first-of-type {
@@ -28,7 +28,7 @@ footer {
 			margin-bottom: 0.4em;
 		}
 		a {
-			color: lighten($purple, 50%);
+			color: lighten($purple, 45%);
 			text-decoration: none;
 
 			&:hover {

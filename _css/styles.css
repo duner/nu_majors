@@ -419,7 +419,7 @@ footer {
     display: table;
     clear: both; }
   footer div.credits {
-    text-align: right;
+    text-align: left;
     color: #eadef7;
     margin-top: 1em; }
     footer div.credits:first-of-type {
@@ -428,7 +428,7 @@ footer {
       margin-top: 0;
       margin-bottom: 0.4em; }
     footer div.credits a {
-      color: #d0b4ee;
+      color: #c3a0e9;
       text-decoration: none; }
       footer div.credits a:hover {
         text-decoration: underline; }
