@@ -575,10 +575,8 @@ div.main_chart {
   div.main_chart svg g.chart g.major .line {
     fill: none;
     cursor: pointer; }
-  div.main_chart svg g.chart g.major.inactive .line {
-    opacity: .1; }
-    div.main_chart svg g.chart g.major.inactive .line:hover {
-      opacity: .7; }
+  div.main_chart svg g.chart g.major.inactive .line:hover {
+    opacity: .7; }
   div.main_chart svg g.chart g.major.inactive circle {
     opacity: 0; }
     div.main_chart svg g.chart g.major.inactive circle:hover {

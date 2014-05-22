@@ -222,12 +222,21 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			});
 
 		var path = majors.append("path")
-			.attr("class", "line")
+			.attr("class", "line line1")
 			.attr("d", function(d) { return line(d.values); })
 			.attr("clip-path", "url(#main_chart_area)")
 			.attr("stroke", function(d) { return purple })
 			.attr("opacity", .5)
-			.attr("stroke-width", 1.2)
+			.attr("stroke-width", 1.2);
+
+		var path2 = majors.append("path")
+			.attr("class", "line line2")
+			.attr("d", function(d) { return line(d.values); })
+			.attr("clip-path", "url(#main_chart_area)")
+			.attr("stroke", function(d) { return 'yellow' })
+			.attr("opacity", 0)
+			.attr("stroke-width", 5)
+			.attr("stroke-opacity", 0)
 
 		var point = majors.append("g")
 			.attr("class", "line-points")
@@ -299,7 +308,10 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				}
 			})
 
-		var path = majors.selectAll("path")
+		var path = majors.selectAll(".line1")
+			.order()
+
+		var path2 = majors.selectAll(".line2")
 			.order()
 
 		path.transition()
@@ -329,6 +341,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 					return 0.1;
 				}
 			});
+
+		path2.transition()
+			.duration(duration)
+			.ease(ease)
+			.attr("d", function(d) { return line(d.values); })
 
 		var point = majors.selectAll('.line-points');
 		point.transition()
