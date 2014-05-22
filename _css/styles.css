@@ -530,6 +530,8 @@ div.search {
   div.search p.mobile_explain {
     text-align: center;
     font-size: 0.9em; }
+  div.search li.search-field input {
+    height: 25px !important; }
   div.search .chosen-container-multi .chosen-choices li.search-choice {
     position: relative;
     margin: 3px 0 3px 5px;
@@ -575,8 +577,10 @@ div.main_chart {
   div.main_chart svg g.chart g.major .line {
     fill: none;
     cursor: pointer; }
-  div.main_chart svg g.chart g.major.inactive .line:hover {
-    opacity: .7; }
+  div.main_chart svg g.chart g.major.inactive .line1 {
+    opacity: .1; }
+    div.main_chart svg g.chart g.major.inactive .line1:hover {
+      opacity: .7; }
   div.main_chart svg g.chart g.major.inactive circle {
     opacity: 0; }
     div.main_chart svg g.chart g.major.inactive circle:hover {
