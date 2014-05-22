@@ -686,6 +686,8 @@ section.content {
             content: "";
             display: table;
             clear: both; } }
+      section.content div.major div.article#new div.text {
+        float: left; }
       section.content div.major div.article div.text p:first-of-type {
         margin-top: 0em; }
       section.content div.major div.article div.text p:last-of-type {

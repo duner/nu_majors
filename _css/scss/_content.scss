@@ -50,7 +50,13 @@ section.content {
 			@include row($direction: LTR);
 			@include media($medium) {
 				@include row($direction: RTL);	
-			}	
+			}
+
+			&#new {
+				div.text {
+					float: left;
+				}
+			}
 
 
 			div.text {

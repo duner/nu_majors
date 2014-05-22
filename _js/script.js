@@ -169,11 +169,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		
 		svg
 			.attr("width", width + margin.left + margin.right)
-	    	.attr("height", height + margin.top + margin.bottom)
+	    	.attr("height", height + margin.top + margin.bottom);
 
 		main_chart
 			.attr('class', 'chart inactive')
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		if (width < break1) {
 			x.domain([new Date(2007, 0, 1), new Date(2013, 0, 1)]);
@@ -977,14 +977,16 @@ $nav = $('nav');
 $navToggle.click(function() {
 	$nav.toggleClass("active");
 	$nav.toggleClass("opened");
-
 	if ($nav.hasClass("opened")) {
 		$navItems.click(function(){
 			$nav.removeClass("active");
 			$nav.removeClass("opened");
 		})
 	}
+
 });
+
+
 
 $navItems.click(function(e) {
 	$this = $(this)
