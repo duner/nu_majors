@@ -11,6 +11,8 @@ break2 = 388;
 smallW = $("div.major div.article div.small_chart").width()
 smallH = $("div.major div.article div.small_chart").height()
 
+var colorArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
+
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -66,7 +68,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	}
 
 	//Set up SVG
-	var margin = {top: 40, right: 30, bottom: 30, left: 30},
+	var margin = {top: 40, right: 15, bottom: 30, left: 30},
 	    width = w - margin.left - margin.right,
 	    height = h - margin.top - margin.bottom;
 
@@ -537,10 +539,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 		articles = d3.selectAll("div.article").each(function(d, i) {
 			self = this;
+
 			m = d3.select(this).attr('data-major');
 			m = m.split(",")
+			console.log(m);
 			small_dataset = [];
-
 
 			for (var i = dataset.length - 1; i >= 0; i--) {
 				index = m.indexOf(dataset[i].major);
@@ -549,9 +552,19 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				}
 			}
 
+			for (var i = 0; i <= small_dataset.length - 1; i++) {
+				if (small_dataset.length > 1) {
+					small_dataset[i].color = colorArray[i];
+				} else {
+					small_dataset[i].color = purple;
+				}
+			};
+			
+			console.log(small_dataset);
+
 			smX.range([0, smallWidth]);
 			smY.rangeRound([smallHeight, 0]);
-			
+
 			a = getUpperDomain(small_dataset);
 			smY.domain([0,a]);
 
@@ -571,10 +584,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			    .attr("fill", "grey");
 
 			var majors = small_chart.selectAll(".major")
-				.data(dataset)
+				.data(small_dataset)
 				.enter()
 				.append("g")
-				.filter(function(d) { return (d.major == m); })
 				.attr("class", "major")
 				.attr("data-major", function(d) {return d.major;})
 				.attr("data-school", function(d) {return d.school;})
@@ -583,13 +595,13 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("class", "line")
 				.attr("d", function(d) { return smLine(d.values); })
 				.attr("clip-path", "url(#chartarea)")
-				.attr("stroke", function(d) { return purple })
+				.attr("stroke", function(d) { return d.color })
 				.attr("fill", "none")
 				.attr("stroke-width", 1.2)
 
 			var point = majors.append("g")
 				.attr("class", "line-points")
-				.attr('fill', purple);
+				.attr('fill', function(d) { return d.color });
 
 			var circle = point.selectAll('circle')
 				.data(function(d){return d.values})
@@ -853,11 +865,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		dataset = updateColors(d)
 		updateChart(dataset);
 	}
+	
 
 	function makeColorScheme() {
 
 		var colors = [];
-		var colorArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
 
 		for (var i = 0; i < colorArray.length; i++) {
 			var obj = {

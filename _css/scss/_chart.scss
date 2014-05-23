@@ -93,8 +93,8 @@ p.metainfo {
   display: none;
 
 	@include media($large) {
-		@include shift(4);
-		@include span-columns(8);
+		@include shift(3);
+		@include span-columns(10);
 	}
 
 	@include media($medium) {
@@ -103,11 +103,11 @@ p.metainfo {
 	}
 
 	@include media($small) {
-		@include shift(1);
-		@include span-columns(7);
+		@include shift(0);
+		@include span-columns(8);
 	}
 
-	font-size: .75em;
+	font-size: .9em;
 	text-align: center;
 
 	a {

@@ -599,15 +599,15 @@ div.small_chart .axis path, div.small_chart .axis line {
 
 p.metainfo {
   display: none;
-  font-size: .75em;
+  font-size: .9em;
   text-align: center; }
   @media screen and (min-width: 48.5em) {
     p.metainfo {
-      margin-left: 25.43947%;
+      margin-left: 19.0796%;
       display: block;
       float: left;
       margin-right: 1.75788%;
-      width: 49.12106%; }
+      width: 61.8408%; }
       p.metainfo:last-child {
         margin-right: 0; } }
   @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
@@ -621,11 +621,11 @@ p.metainfo {
         margin-right: 0; } }
   @media screen and (max-width: 25em) {
     p.metainfo {
-      margin-left: 8.5298%;
+      margin-left: 0%;
       display: block;
       float: left;
       margin-right: 3.57866%;
-      width: 87.05267%; }
+      width: 100%; }
       p.metainfo:last-child {
         margin-right: 0; } }
   p.metainfo a {
