@@ -81,22 +81,53 @@ section.content {
 				}
 			}
 
-			div.small_chart {
-				//background-color: $purple;
+			div.articlechart {
+				// background-color: $purple;
 				width: 100%;
 				@include media($large) {
 					@include span-columns(6);	
-					height: 250px;	
+					div.small_chart {
+						height: 250px;		
+					}
 				}
 				@include media($medium) {
-					@include fill-parent;	
-					height: 200px;	
+					@include fill-parent;
+					div.small_chart {
+						height: 200px;		
+					}					
 					margin-bottom: 1em;	
 				}
 				@include media($small) {
 					@include fill-parent;	
-					height: 175px;	
+					div.small_chart {
+						height: 175px;		
+					}					
 					margin-bottom: 1em;	
+				}
+
+				div.key {
+					clear: both;
+					margin-bottom: 1em;
+					div.item {
+						@include row();
+						margin-right: 0.5em;
+						margin-bottom: 0.2em;
+						position: relative;
+						div.box {
+							@include span-columns(1);
+							display: block;
+							height: 15px;
+							margin-right: 5px;
+							bottom: 0;
+						}
+						p {
+							font-size: 0.9em;
+							float: left;
+							display: inline;
+							margin-top: 0;
+							margin-bottom: 0;
+						}
+					}
 				}
 			}
 		}

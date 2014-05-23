@@ -542,7 +542,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 			m = d3.select(this).attr('data-major');
 			m = m.split(",")
-			console.log(m);
+			//console.log(m);
 			small_dataset = [];
 
 			for (var i = dataset.length - 1; i >= 0; i--) {
@@ -551,16 +551,16 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 					small_dataset.push(dataset[i]);
 				}
 			}
-
+			
 			for (var i = 0; i <= small_dataset.length - 1; i++) {
 				if (small_dataset.length > 1) {
 					small_dataset[i].color = colorArray[i];
 				} else {
 					small_dataset[i].color = purple;
-				}
-			};
-			
-			console.log(small_dataset);
+				}				
+			}
+
+			//console.log(small_dataset);
 
 			smX.range([0, smallWidth]);
 			smY.rangeRound([smallHeight, 0]);
@@ -632,6 +632,31 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.attr("dy", ".71em")
 				.style("text-anchor", "end")
 				.text("Degrees Awarded");
+
+			//Create Key
+			if (small_dataset.length > 1) {
+
+				key = d3.select(this).select('div.articlechart').append('div')
+					.attr('class', 'key');
+
+				for (var i = 0; i <= small_dataset.length - 1; i++) {
+
+					var item = key.selectAll(".item")
+						.data(small_dataset)
+						.enter()
+						.append("div")
+						.attr("class", "item")
+
+					box = item.append('div')
+						.attr('class', 'box')
+						.style('background-color', function(d) { return d.color; });
+
+					p = item.append('p')
+						.text(function(d) { return d.major; });
+
+				}
+			}
+
 		});
 	}
 
@@ -763,6 +788,8 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 		smCh = d3.selectAll('div.small_chart')
 		smCh.selectAll("*").remove()
+		smKey = d3.selectAll('div.key')
+		smKey.selectAll("*").remove()
 		createSmallGraphs(dataset)
 
 		// d3.selectAll('div.small_chart svg')

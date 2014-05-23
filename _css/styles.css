@@ -718,27 +718,59 @@ section.content {
           width: 100%; }
           section.content div.major div.article div.text:last-child {
             margin-left: 0; } }
-      section.content div.major div.article div.small_chart {
+      section.content div.major div.article div.articlechart {
         width: 100%; }
         @media screen and (min-width: 48.5em) {
-          section.content div.major div.article div.small_chart {
+          section.content div.major div.article div.articlechart {
             display: block;
             float: right;
             margin-left: 1.75788%;
-            width: 36.40133%;
-            height: 250px; }
-            section.content div.major div.article div.small_chart:last-child {
-              margin-left: 0; } }
+            width: 36.40133%; }
+            section.content div.major div.article div.articlechart:last-child {
+              margin-left: 0; }
+            section.content div.major div.article div.articlechart div.small_chart {
+              height: 250px; } }
         @media screen and (min-width: 25.0625em) and (max-width: 48.4375em) {
-          section.content div.major div.article div.small_chart {
+          section.content div.major div.article div.articlechart {
             width: 100%;
-            height: 200px;
-            margin-bottom: 1em; } }
+            margin-bottom: 1em; }
+            section.content div.major div.article div.articlechart div.small_chart {
+              height: 200px; } }
         @media screen and (max-width: 25em) {
-          section.content div.major div.article div.small_chart {
+          section.content div.major div.article div.articlechart {
             width: 100%;
-            height: 175px;
-            margin-bottom: 1em; } }
+            margin-bottom: 1em; }
+            section.content div.major div.article div.articlechart div.small_chart {
+              height: 175px; } }
+        section.content div.major div.article div.articlechart div.key {
+          clear: both;
+          margin-bottom: 1em; }
+          section.content div.major div.article div.articlechart div.key div.item {
+            display: block;
+            margin-right: 0.5em;
+            margin-bottom: 0.2em;
+            position: relative; }
+            section.content div.major div.article div.articlechart div.key div.item:after {
+              content: "";
+              display: table;
+              clear: both; }
+            section.content div.major div.article div.articlechart div.key div.item div.box {
+              display: block;
+              float: left;
+              margin-right: 1.75788%;
+              width: 4.60199%;
+              display: block;
+              height: 15px;
+              margin-right: 5px;
+              bottom: 0; }
+              section.content div.major div.article div.articlechart div.key div.item div.box:last-child {
+                margin-right: 0; }
+            section.content div.major div.article div.articlechart div.key div.item p {
+              font-size: 0.9em;
+              float: left;
+              display: inline;
+              margin-top: 0;
+              margin-bottom: 0; }
 
 @media screen and (min-width: 48.5em) {
   div.centertext {
