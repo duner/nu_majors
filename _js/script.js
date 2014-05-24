@@ -11,8 +11,6 @@ break2 = 388;
 smallW = $("div.major div.article div.small_chart").width()
 smallH = $("div.major div.article div.small_chart").height()
 
-var colorArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
-
 
 if (navigator.userAgent.match(/iPhone/i) ||
 	navigator.userAgent.match(/iPad/i)	||
@@ -551,16 +549,21 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 					small_dataset.push(dataset[i]);
 				}
 			}
-			
+		
+			var colorsArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"];
+	
 			for (var i = 0; i <= small_dataset.length - 1; i++) {
 				if (small_dataset.length > 1) {
-					small_dataset[i].color = colorArray[i];
+					small_dataset[i].color = colorsArray[i];
 				} else {
 					small_dataset[i].color = purple;
 				}				
 			}
 
 			//console.log(small_dataset);
+
+			//Update Dataset
+			small_dataset = addChartsToDataset(small_dataset)
 
 			smX.range([0, smallWidth]);
 			smY.rangeRound([smallHeight, 0]);
@@ -658,6 +661,12 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			}
 
 		});
+	}
+
+	function addChartsToDataset(dataset) {
+
+		return dataset;
+
 	}
 
 	// function updateSmallGraphs(dataset) {
@@ -789,7 +798,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		smCh = d3.selectAll('div.small_chart')
 		smCh.selectAll("*").remove()
 		smKey = d3.selectAll('div.key')
-		smKey.selectAll("*").remove()
+		smKey.remove()
 		createSmallGraphs(dataset)
 
 		// d3.selectAll('div.small_chart svg')
@@ -897,6 +906,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	function makeColorScheme() {
 
 		var colors = [];
+		var colorArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
 
 		for (var i = 0; i < colorArray.length; i++) {
 			var obj = {
@@ -999,6 +1009,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	}
 
 });
+
 
 //ALL THE OTHER STUFF
 //Floating Nav Bar
