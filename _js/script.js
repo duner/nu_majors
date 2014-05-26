@@ -550,7 +550,10 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 					small_dataset.push(dataset[i]);
 				}
 			}
-		
+			
+			//Update Dataset
+			small_dataset = addChartsToDataset(small_dataset);
+
 			var colorsArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"];
 	
 			for (var i = 0; i <= small_dataset.length - 1; i++) {
@@ -563,8 +566,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 			//console.log(small_dataset);
 
-			//Update Dataset
-			small_dataset = addChartsToDataset(small_dataset)
 
 			smX.range([0, smallWidth]);
 			smY.rangeRound([smallHeight, 0]);
@@ -665,6 +666,24 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 	function addChartsToDataset(dataset) {
 
+		for (var i = dataset.length - 1; i >= 0; i--) {
+			if (dataset[i].major == "Computer Science") {
+				dataset[i].major = "Computer Science (Degrees Awarded)"
+				data = {
+					major: 'Computer Science (Declared Majors)',
+					values: [
+						[new Date(2008, 0, 1), 61],
+						[new Date(2009, 0, 1), 78],
+						[new Date(2010, 0, 1), 91],
+						[new Date(2011, 0, 1), 83],
+						[new Date(2012, 0, 1), 109],
+						[new Date(2013, 0, 1), 156],
+						//[new Date(2014, 0, 1), 192],
+					]		
+				}
+				dataset.push(data);
+			}
+		};
 		return dataset;
 
 	}
