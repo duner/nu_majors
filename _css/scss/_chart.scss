@@ -1,4 +1,9 @@
-
+svg {
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;  
+}
 section.main_chart {
   padding-top: 1em;
   @include media($small) {
@@ -10,7 +15,6 @@ section.main_chart {
   // border-bottom-width: 1px;
   // border-bottom-color: $purple;
   // border-bottom-style: solid;
-
 }
 
 div.main_chart {

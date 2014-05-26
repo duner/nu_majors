@@ -43,6 +43,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		dataset.push(data);
 	});
 
+
 	dataset1 = dataset;
 
 	colors = makeColorScheme()
@@ -659,7 +660,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 				}
 			}
-
 		});
 	}
 
@@ -669,67 +669,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 	}
 
-	// function updateSmallGraphs(dataset) {
-	// 	var duration = 100;
-	// 	var ease = 'linear';
-
-	// 	articles = d3.selectAll("div.article").each(function(d, i) {
-	// 		self = this;
-	// 		m = d3.select(this).attr('data-major');
-
-	// 		if (smallW < 350) {
-	// 			smX.domain([new Date(2006, 0, 1), new Date(2013, 0, 1)]);
-	// 		} else {
-	// 			smX.domain([new Date(2003, 0, 1), new Date(2013, 0, 1)]);
-	// 		}
-	// 		smX.range([0, smallWidth]);
-	// 		smY.rangeRound([smallHeight, 0]);
-			
-	// 		a = getUpperDomain(small_dataset);
-	// 		smY.domain([0,a]);
-
-	// 		var t = small_chart.transition()
-	// 			.duration(duration)
-	// 			.ease(ease);
-
-	// 		t.select(".smX.axis")
-	// 			.call(smXAxis);
-	// 		t.select(".smY.axis")
-	// 			.call(smYAxis);
-
-	// 	    small_chart = svg.select('g.small_chart');
-	// 	    small_chart.transition()
-	// 	  		.duration(duration)
-	// 			.ease(ease)
-	// 		    .attr("width", smallWidth)
-	// 		    .attr("height", smallHeight)
-	// 			.attr("transform", "translate(" + smallMargin.left + "," + smallMargin.top + ")");
-
-	// 		small_chart.select("clipPath rect")
-	// 		    .attr("width", smallWidth)
-	// 		    .attr("height", smallHeight)
-	// 		    .attr("fill", "grey");
-
-	// 		var majors = small_chart.selectAll(".major");
-
-	// 		var path = majors.selectAll("path");
-	// 		path.transition()
-	// 			.ease(ease)
-	// 			.duration(duration)
-	// 			.attr("d", function(d) { return smLine(d.values); })
-	// 			.attr("clip-path", "url(.chart-area)");
-
-	// 		var point = majors.selectAll("g");
-
-	// 		var circle = point.selectAll('circle')
-	// 		circle.transition()
-	// 			.duration(duration)
-	// 			.ease(ease)
-	// 			.attr("cx", function(d) { return smX(d[0]) })
-	// 			.attr("cy", function(d) { return smY(d[1]) })
-
-	// 	});
-	// }
 
 	$( window ).resize( function() {
 		wid = $("div.main_chart").width()
@@ -1012,54 +951,49 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 
 //ALL THE OTHER STUFF
-//Floating Nav Bar
-$navWrap = $('div.navwrapper');
-$navWrap.waypoint('sticky');
+	//Floating Nav Bar
+	$navWrap = $('div.navwrapper');
+	$navWrap.waypoint('sticky');
+	//Updating Nav States
+	$article = $('div.major');
+	$navItems = $('nav ul li a')
+	$current = $('p.current');
+	//Add Waypoints
+	$article.waypoint(function(direction){
+		var $active = $(this);
+		var id = $active.attr("id")
+		var name = $('div.major#' + id + '> h3').html();
 
-//Updating Nav States
-$article = $('div.major');
-$navItems = $('nav ul li a')
-$current = $('p.current');
-
-$article.waypoint(function(direction){
-	var $active = $(this);
-	var id = $active.attr("id")
-	var name = $('div.major#' + id + '> h3').html();
-
-	for (var i = $navItems.length - 1; i >= 0; i--) {
-		$item = $($navItems[i]);
-		link = $item.attr("href").substr(1);
-		if (link == id) {
-			$item.addClass("active");
-			$current.text(name);
-		} else {
-			$item.removeClass();
+		for (var i = $navItems.length - 1; i >= 0; i--) {
+			$item = $($navItems[i]);
+			link = $item.attr("href").substr(1);
+			if (link == id) {
+				$item.addClass("active");
+				$current.text(name);
+			} else {
+				$item.removeClass();
+			}
+		};
+	});
+	//Responsive Nav
+	$navToggle = $('#navToggle');
+	$nav = $('nav');
+	$navToggle.click(function() {
+		$nav.toggleClass("active");
+		$nav.toggleClass("opened");
+		if ($nav.hasClass("opened")) {
+			$navItems.click(function(){
+				$nav.removeClass("active");
+				$nav.removeClass("opened");
+			})
 		}
-	};
-});
 
-
-$navToggle = $('#navToggle');
-$nav = $('nav');
-$navToggle.click(function() {
-	$nav.toggleClass("active");
-	$nav.toggleClass("opened");
-	if ($nav.hasClass("opened")) {
-		$navItems.click(function(){
-			$nav.removeClass("active");
-			$nav.removeClass("opened");
-		})
-	}
-
-});
-
-
-
-$navItems.click(function(e) {
-	$this = $(this)
-	$this.addClass("active");
-	//$current.text($this.text());
-});
+	});
+	$navItems.click(function(e) {
+		$this = $(this)
+		$this.addClass("active");
+		//$current.text($this.text());
+	});
 
 
 });

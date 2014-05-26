@@ -552,6 +552,15 @@ div.search {
         div.search .chosen-container-multi .chosen-choices li.search-choice a.search-choice-close:after:hover {
           color: black; }
 
+svg {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none; }
+
 section.main_chart {
   padding-top: 1em;
   padding-bottom: 2em;
