@@ -22,6 +22,13 @@ module.exports = function(grunt) {
 			        spawn: false,
 			    }
 			}
+		},
+
+		uglify: {
+    		build: {
+		        src: '_js/script.js',
+		        dest: '_js/script.min.js'
+    		}
 		}
 
 	});
@@ -29,8 +36,9 @@ module.exports = function(grunt) {
 	// Dependencies
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	
 	//Run
-	grunt.registerTask('default', ['sass'])
+	grunt.registerTask('default', ['sass', 'uglify'])
 	
 };
