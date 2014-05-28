@@ -25,7 +25,7 @@ if (navigator.userAgent.match(/iPhone/i) ||
 d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	
 	//Create Data Structure from CSV
-	var dataset = [];
+	var DATASET = [];
 	csv.forEach(function(d) {
 		var data = {
 			school: d.school,
@@ -40,11 +40,12 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			degree_count = +d[parseInt(a)];
 			data.values.push([year, degree_count]);
 		}
-		dataset.push(data);
+		DATASET.push(data);
 	});
 
-
-	dataset1 = dataset;
+	//For the Bar Chart
+	var dataset = DATASET;
+	var dataset_full = dataset;
 
 	colors = makeColorScheme()
 	purple = d3.rgb('#501F84');
@@ -158,10 +159,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 	} else {
 		$('div.search').hide();
 		main_chart.attr('data-charttype', 'bar')
-		drawBarGraph(dataset1)
+		drawBarGraph(dataset_full)
 		$('p.instructions.line').hide();
 		$('p.instructions.bar').show();
 	}
+
 	createSmallGraphs(dataset);
 
 	$('p.metainfo').css("display", "inline");
@@ -538,24 +540,32 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 
 		articles = d3.selectAll("div.article").each(function(d, i) {
 			self = this;
+			var colorsArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"];
 
 			m = d3.select(this).attr('data-major');
-			m = m.split(",")
-			//console.log(m);
+
+			a = addChartsToDataset(dataset);
+
+			var n = [];
+			if (m == "Computer") {
+				for (var i = a.length - 1; i >= 0; i--) {
+					computer = a[i].major.indexOf("Computer");
+					if (computer >= 0) {
+						n.push(a[i].major);
+					}
+				};
+			} else {
+				n = m.split(",")
+			}
 			small_dataset = [];
 
-			for (var i = dataset.length - 1; i >= 0; i--) {
-				index = m.indexOf(dataset[i].major);
+			for (var i = a.length - 1; i >= 0; i--) {
+				index = n.indexOf(a[i].major);
 				if (index >= 0) {
-					small_dataset.push(dataset[i]);
+					small_dataset.push(a[i]);
 				}
 			}
 			
-			//Update Dataset
-			small_dataset = addChartsToDataset(small_dataset);
-
-			var colorsArray = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"];
-	
 			for (var i = 0; i <= small_dataset.length - 1; i++) {
 				if (small_dataset.length > 1) {
 					small_dataset[i].color = colorsArray[i];
@@ -564,7 +574,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				}				
 			}
 
-			//console.log(small_dataset);
+			//console.log('a');
 
 
 			smX.range([0, smallWidth]);
@@ -592,6 +602,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				.data(small_dataset)
 				.enter()
 				.append("g")
+				.sort(function(a, b) {
+					return d3.descending(a.major, b.major);
+				})
 				.attr("class", "major")
 				.attr("data-major", function(d) {return d.major;})
 				.attr("data-school", function(d) {return d.school;})
@@ -664,31 +677,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		});
 	}
 
-	function addChartsToDataset(dataset) {
-
-		for (var i = dataset.length - 1; i >= 0; i--) {
-			if (dataset[i].major == "Computer Science") {
-				dataset[i].major = "Computer Science (Degrees Awarded)"
-				data = {
-					major: 'Computer Science (Declared Majors)',
-					values: [
-						[new Date(2008, 0, 1), 61],
-						[new Date(2009, 0, 1), 78],
-						[new Date(2010, 0, 1), 91],
-						[new Date(2011, 0, 1), 83],
-						[new Date(2012, 0, 1), 109],
-						[new Date(2013, 0, 1), 156],
-						//[new Date(2014, 0, 1), 192],
-					]		
-				}
-				dataset.push(data);
-			}
-		};
-		return dataset;
-
-	}
-
-
 	$( window ).resize( function() {
 		wid = $("div.main_chart").width()
 		width = wid - margin.left - margin.right;
@@ -742,9 +730,9 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			if (charttype == 'line') {
 				main_chart.selectAll('*').remove();
 				main_chart.attr('data-charttype', 'bar');
-				drawBarGraph(dataset1);
+				drawBarGraph(dataset_full);
 			} else {
-				updateBarGraph(dataset1)
+				updateBarGraph(dataset_full)
 			}
 		}
 
@@ -921,6 +909,44 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		};
 		max = d3.max(yValues);
 		return max + (max/15);
+	}
+
+	function addChartsToDataset(d) {
+		for (var i = d.length - 1; i >= 0; i--) {
+			if (d[i].major == "Computer Science") {
+				d[i].major = "Computer Science (Degrees Awarded)"
+				data = {
+					major: 'Computer Science (Declared Majors)',
+					values: [
+						[new Date(2008, 0, 1), 61],
+						[new Date(2009, 0, 1), 78],
+						[new Date(2010, 0, 1), 91],
+						[new Date(2011, 0, 1), 83],
+						[new Date(2012, 0, 1), 109],
+						[new Date(2013, 0, 1), 156],
+						//[new Date(2014, 0, 1), 192],
+					]		
+				}
+				d.push(data);
+			}
+			if (d[i].major == "Computer Engineering") {
+				d[i].major = "Computer Engineering (Degrees Awarded)"
+				data = {
+					major: 'Computer Engineering (Declared Majors)',
+					values: [
+						[new Date(2008, 0, 1), 55],
+						[new Date(2009, 0, 1), 55],
+						[new Date(2010, 0, 1), 55],
+						[new Date(2011, 0, 1), 49],
+						[new Date(2012, 0, 1), 42],
+						[new Date(2013, 0, 1), 65],
+						//[new Date(2014, 0, 1), 192],
+					]		
+				}
+				d.push(data);
+			}
+		};
+		return d;
 	}
 
 	function getUpperDomainForLatestYear(dataset) {
