@@ -164,8 +164,6 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 		$('p.instructions.bar').show();
 	}
 
-	createSmallGraphs(dataset);
-
 	$('p.metainfo').css("display", "inline");
 
 	function drawChart(dataset) {
@@ -714,7 +712,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 				main_chart.attr('data-charttype', 'line');
 				drawChart(dataset);
 			} else {
-				updateChart(dataset);
+				updateChart(DATASET);
 			}
 
 		} else {
@@ -736,16 +734,16 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			}
 		}
 
-	    smallW = $("div.article div.small_chart").width();
-		smallH = $("div.article div.small_chart").height();
-		smallWidth = smallW - smallMargin.right - smallMargin.left; 
-		smallHeight = smallH - smallMargin.top - smallMargin.bottom
+	 //    smallW = $("div.article div.small_chart").width();
+		// smallH = $("div.article div.small_chart").height();
+		// smallWidth = smallW - smallMargin.right - smallMargin.left; 
+		// smallHeight = smallH - smallMargin.top - smallMargin.bottom
 
-		smCh = d3.selectAll('div.small_chart')
-		smCh.selectAll("*").remove()
-		smKey = d3.selectAll('div.key')
-		smKey.remove()
-		createSmallGraphs(dataset)
+		// smCh = d3.selectAll('div.small_chart')
+		// smCh.selectAll("*").remove()
+		// smKey = d3.selectAll('div.key')
+		// smKey.remove()
+		// createSmallGraphs(dataset)
 
 		// d3.selectAll('div.small_chart svg')
 		// 	.attr("width", smallWidth + smallMargin.left + smallMargin.right)
