@@ -1,8 +1,26 @@
+div.centertext {
+	a {
+		color: $purple;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
 section.content {
 	padding-bottom: 2em;
 	margin-bottom: 3em;
 	@include reset-all();
 	@include reset-layout-direction();
+
+	a {
+		color: $purple;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 
 	div.major {
 		padding-top: 2em;
