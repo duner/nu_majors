@@ -85,9 +85,11 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 			if (m == "Computer") {
 				for (var i = a.length - 1; i >= 0; i--) {
 					computer = a[i].major.indexOf("Computer");
-					if (computer >= 0) {
+					if (computer >= 0 || a[i].major.indexOf("Electrical") >= 0) {
 						n.push(a[i].major);
 					}
+					smX.domain([new Date(2003, 0, 1), new Date(2014, 0, 1)]);
+
 				};
 			} else {
 				n = m.split(",")
@@ -267,7 +269,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 						[new Date(2011, 0, 1), 83],
 						[new Date(2012, 0, 1), 109],
 						[new Date(2013, 0, 1), 156],
-						//[new Date(2014, 0, 1), 192],
+						[new Date(2014, 0, 1), 192],
 					]		
 				}
 				d.push(data);
@@ -283,7 +285,7 @@ d3.csv("_data/Undergrad_Degrees_012814.csv", function(csv) {
 						[new Date(2011, 0, 1), 49],
 						[new Date(2012, 0, 1), 42],
 						[new Date(2013, 0, 1), 65],
-						//[new Date(2014, 0, 1), 192],
+						[new Date(2014, 0, 1), 83],
 					]		
 				}
 				d.push(data);
